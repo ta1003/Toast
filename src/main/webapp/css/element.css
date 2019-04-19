@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+/*input 태그 css*/
+input[type=text], [type=password] { /*input 태그의 type=text 타입인 경우 */
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=submit], [type=reset], [type=button] {
+	background-color: #1C4C93;
+	color: white;
+	margin: 8px 0;
+	border: none;
+	border-radius: 70px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover, [type=button]:hover {
+	background-color: #14376b;
+}
+
+/* 테이블 css*/
+table { /*모든 테이블에 공통적으로 적용할 요소*/
+	border-collapse: collapse;
+	background: white;
+}
+
+/* table th { */
+/* 	background-color: #2057A8; */
+/* 	color: white; 글자 색상 */
+/* } */
+
+/* table td { */
+/* 	background-color: white; */
+/* } */
+
+#form_layout { /*form 태그안의 요소를 flex로 정렬*/
+	display: flex;
+	flex-direction: column;
+}
+
+#in_form1 {
+	flex: 10;
+}
+
+#in_form2 {
+	flex: 1;
+	display: flex;
+	justify-content: center; /*p 태그를 수평 가운데 정렬*/
+}
+
+#x_tab { /* x_tab hover가 있는 테이블*/
+	border: 1px solid #ddd;
+	width:100%;
+	flex:9;
+	text-align: center;/*안의 글자 가운데 정렬*/
+}
+
+#y_tab {
+	background: white;
+	border: 1px solid #ddd;
+}
+
+#x_tab tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#x_tab tr:hover {
+	background-color: #ddd;
+}
+
+/* index.html */
+#main_text {
+	font-size: 4em;
+	font-family: 'Caveat Brush', cursive; /*main 화면의 폰트*/
+	color: white;
+}
+
+#tab_layout>form{
+	width:100%;
+}
+
+/*cal 관련 css*/
+#tab_layout>input{
+	flex:1;
+}
+
+#calendar {
+	flex:9;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	height: 100%;
+}
+
+#calendar th {
+	border: 1px solid gray;
+}
+
+#calendar td {
+	border: 1px solid gray;
+	text-align: left;
+	vertical-align: top;
+	position: relative; /*그림이 올라갈 거라서 다른 친구들과의 관계를 맺는*/
+}
+
+.clist>p {
+	font-size: 5px;
+	margin: 3px;
+	background-color: pink;
+}
+
+.cPreview {
+	position: absolute;
+	top: -30px;
+	left: 10px;
+	background-color: forestgreen;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 40px 40px 40px 1px;
+	width: 40px;
+	height: 40px;
+}
+
+/*cal의 detail view*/
+#trans {
+	display: none;
+}

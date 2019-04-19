@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+html, body {
+	height: 100%; /* 높이를 전체 브라우저를 가득 채우도록 함*/
+	margin: 0;
+	padding: 0;
+}
+
+body {	
+	background-size: cover;
+	/* 	font-family: 'Jeju Gothic', serif; */
+}
+
+#layout { /*layout 안의 자식 요소는 크게 header, container, footer*/
+	display: flex; /*flex*/
+	flex-direction: column;
+	height: 100%; /*layout-container-in_con height를 100% 으로 주어 in_con의 크기를 조절함*/
+}
+
+#header {
+	background: #515ce6; /*헤더의 색상*/
+	flex: 2.5;
+	display: flex; /* 내부 요소를 flex로 정렬함  */	
+}
+
+#toast {
+	flex: 6;
+	padding: 100px 200px;
+}
+
+#toast>in_con { /* 컨테이너 안의 div 가운데 정렬 */
+	text-align: center;
+}
+
+#in_con { /*index 페이지 외에 다른 페이지에서 사용될 안쪽 container css*/
+	display: flex; /*내부 요소를 가운데 정렬 하기 위한 flex 설정*/
+	flex-direction: column; /* 내부 요소 컬럼식으로 정렬*/
+	align-items: center; /*flex > 세로 가운데 정렬 */
+	justify-content: center; /* flex > 가로 가운데 정렬 */
+	height: 100%; /*layout-container-in_con height를 100% 으로 주어 in_con의 크기를 조절함*/
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+#in_con_index { /*index 페이지 외에 다른 페이지에서 사용될 안쪽 container css*/
+	display: flex; /*내부 요소를 가운데 정렬 하기 위한 flex 설정*/
+	flex-direction: column; /* 내부 요소 컬럼식으로 정렬*/
+	align-items: center; /*flex > 내부 요소 세로 가운데 정렬 */
+	justify-content: center; /* flex > 내부 요소 가로 가운데 정렬 */
+	height: 100%; /*layout-container-in_con height를 100% 으로 주어 in_con의 크기를 조절함*/
+}
+
+#tab_layout { /**/
+	background-color: pink;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center; /*flex > 세로 가운데 정렬 */
+	justify-content: center;
+	display: flex; /* flex > 가로 가운데 정렬 */
+}
+
+#x_layout {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background-color: black;
+}
+
+.menu {
+	background-color: pink;
+	flex: 1 1 0;
+	display: flex;
+	align-items: center; /*flex > 세로 가운데 정렬 */
+	justify-content: center;
+}
+
+.menu>a {
+	width: 100px; /*가로길이와 높이를 고정*/
+	height: 100px;
+	background-color: blue;
+	border: 1px solid black;
+	border-radius: 50%; /*동그라미 형태로 만들어주기 위함*/
+	text-decoration: none;
+	color: white;
+}
+
+#footer {
+	flex: 1.5;
+	display: flex; /*내부 요소(p태그)를 flex를 이용하여 정렬*/
+	align-items: center; /*footer안의 p태그를 수직 중앙정렬*/
+	justify-content: center; /*p 태그를 수평 가운데 정렬*/
+	background: #515ce6;
+}
+
+#footer>p {
+	font-size: 0.5em;
+	color: white;
+	line-height: 20px; /* 줄 간격 옵션 */
+}
+
+#logo {
+	display: flex; /*내부 요소(logo)를 flex를 이용하여 정렬*/
+	align-items: center; /*logo를 수직 중앙정렬*/
+	padding: 20px;
+}
+
+#logo>a>img {
+	margin-left: 20px;
+	height: 50px;
+}
+
+#sign { /* 헤더 안에 있는 welcome, mypage, login, signup 묶어주는 div */
+	display: flex; /*내부 요소(welcome, mypage, login, signup)를 flex를 이용하여 정렬*/
+	align-items: center; /* 수직 가운데 정렬 */
+	margin-left: auto; /* 로그인과 회원가입 버튼 가장자리로 */
+}
+
+#sign>a {
+	text-decoration: none;
+	margin-right: 30px;
+	color: white;
+}
+
+#sign>a:hover:not(#welcome){ /* id가 welcome인 a 태그 외에 sign에 있는 a 태그에 hover를 줌*/
+	color: #cccccc;
+}
+
+#signup, #logout {
+	margin-right: 30px;
+}

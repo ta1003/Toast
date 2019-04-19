@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+<!-- Controller 와 View 처리를 하기 위한 xml Bean들의 집합 -->
+
+
+	<!-- Bean을 생성하기 위한 클래스를 연동하는 context -->
+	<!-- 설정된 Top-package에 있는 모듭 @(annotation)을 Bean으로 등록 -->
+	<context:component-scan base-package="com.min.edu"/>
+	
+	<!-- Annotation을 사용하여 탐색을 진행 가능하도록 함 -->
+	<mvc:annotation-driven/>
+	
+	<!-- 추가 기능 Resolver 설정 -->
+	<!-- DispatcherServlet에 의해 반환된 값을 화면 이동처리를 해줌 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 반환된 문자열의 앞에 위치하는 주소 -->
+		<property name="prefix" value="/WEB-INF/view/"/>
+		<!-- 반환된 문자열의 뒤에 위치하는 주소 -->
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 추가 기능 : 인터셉터 -->
+	<!-- 가로채기 특정한 상황일때 페이지의 흐름을 변경 혹은 제어 하기위해 사용 -->
+	<!-- ex) 글쓰기 화면의 경우 주소에 직접 입력을 해도 접근이 가능 따라서 HttpSession을 확인하여 흐름을 제어 하는 클래스를 생성 -->
+	<!-- 화면에서 화면으로 넘어가는애는 필터에서 잡아주지만 이건 제어 역전이므로 (????)  -->
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/interceptor.do"/>
+			<bean class="com.min.edu.interceptor.Interceptor"/>
+		</mvc:interceptor>
+		<!-- 브라우저의 back 이동페이지의 작동을 하지 못하도록 캐쉬를 브라우저의 캐쉬를 삭제 해줌 -->
+		<bean id="webContentInterceptor"
+				 class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				 <!--  이동 화면의 요청 후 몇초동안 캐쉬를 유지한 후 삭제할지 정하는 시간 -->
+			<property name="cacheSeconds" value="0"/>
+			<property name="useExpiresHeader" value="true"/>
+			<property name="useCacheControlHeader" value="true"/>
+			<property name="useCacheControlNoStore" value="true"/>
+			
+			<!-- 캐쉬 삭제와 별개로 캐쉬를 삭제 하지 않고 유지 시킴 ex) 이미지 , 동영상 -->
+			<property name="cacheMappings">
+				<props>
+					<!-- 캐쉬를 제어할 웹app 위치 , 시잔 60초 60분 24시 86400이면 하루동안 유지-->
+						<prop key="/image/**">86400</prop>
+				</props>
+			</property>
+		</bean>
+	</mvc:interceptors>
+	
+	<!-- 이메일 전송을 위한 Mail  -->
+	<!-- 선택된 메일 서버에서 외부접근이 가능하도록 설정 -->
+	<!-- 선택된 메일의 서버 정보를 사용해야 함 transport protocol SMTP -->
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="info.happy0612@gmail.com"/>
+		<property name="password" value="happy@0612"/>
+		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>				
+				<prop key="mail.smtp.auth">true</prop>			
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

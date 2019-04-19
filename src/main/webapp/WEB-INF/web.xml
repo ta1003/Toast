@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+version="3.1">
+<!-- 사용할 프로젝트의 이름 rootConext와 구분  -->
+  <display-name>Toast</display-name>
+  <!-- WS WAS 기동되면 실행되는 처음 페이지 -->
+  <welcome-file-list>
+  	<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!--  context-param 프로젝트의 모든곳에서 사용 가능한 객체 model을 설정 -->
+ 	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 모델의 Bean을 생성하는 xml path 설정 -->
+		<param-value>/WEB-INF/spring/appServlet/applicationContext.xml</param-value>
+	</context-param>
+
+	<!-- root context는 1개의 context만 사용가능  하지만 spring 에서는 init context가 같기 때문에 사용 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>  
+  
+  	<!-- Design Pattern을 사용한  Front-Controller,Handler-Mapper, HelperView, Decorator를 사용한 Spring 객체-->
+	<servlet>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- View & Controller 연결하기 위한 설정 xml 선언 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+			/WEB-INF/spring/appServlet/servlet-context.xml
+			/WEB-INF/spring/appServlet/aop-context.xml
+			</param-value>
+		</init-param>
+		<!-- xml 환경 값이 loading되는 우선순위를 표기 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- 주소 Mapping  -->
+	<servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<!-- url ~~~.do 로 끝나는 모든 주소 *.do  애는 서버 사이드 -->
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Spring 에서 제공해 주고 있는 Filter를 사용해서 화면을 이동하는 view의 text를 특정 Encoding 형태로 변환해줌 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<!-- 애는 화면 -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>accessFilter</filter-name>		
+		<filter-class>com.min.edu.filter.AccessLogFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>accessFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- WS의 오류 코드를 통해 처리하는 화면을 구분함 error페이지 -->
+	<error-page>
+		<!-- 코드표 200(성공코드) , 300(서버가 응답하지 못하는 상태), 400 , 500 (값이 조합이 안됬을때)-->
+		<error-code>404</error-code>
+		<location>/WEB-INF/view/err/404Error.jsp</location>		
+	</error-page>	
+	
+  
+</web-app>

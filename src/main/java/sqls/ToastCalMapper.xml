@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.edu.cal">
+	
+	<insert id="calInsert" parameterType="CDto">
+		INSERT INTO TOASTCAL 
+			VALUES(TOASTCAL_SEQ.NEXTVAL,
+				#{caltitle},#{calcontent},#{userid},#{caltype})
+	</insert>
+	
+	
+<!-- 페이지 처리한 전체 캘린더들 -->
+ 	<select id="calPagingSelect" parameterType="java.util.Map" resultType="PDto">
+ 	SELECT RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
+ 	 FROM (SELECT ROWNUM RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
+  		FROM (SELECT CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
+        	 FROM TOASTCAL
+       		   ORDER BY CALID))
+  		WHERE RNUM BETWEEN #{firstboardno} AND #{endboardno}
+   </select>   
+   
+  <!--페이지 처리를 위한 전체 캘린더 개수 -->   
+  <select id="calCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TOASTCAL
+	</select>
+</mapper>

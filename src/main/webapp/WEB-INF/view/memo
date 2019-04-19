@@ -1,0 +1,6 @@
+	// <%for (int i = size - 1; i >= 0; i--) {%>
+	// var tr = $("tbody tr").eq(<%=2 * (i / 3) + 1%>	);
+	// tr.children().eq(<%=i % 3%>).html("<img style='width: 180px; height: 135px;' src='./img/month.PNG'>");
+	// <%
+	//	}
+	// %> 

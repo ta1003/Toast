@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<!-- 패키지는 컴파일이 됨 , 폴더는 저장을 하기위한것 -->
+	<!-- 인터프리터(화면)는 폴더에 컴파일 필요한것들은 패키지로~ -->
+	<!-- DataBase의 접속 정보를 가지고 있는 **.properties 파일을 bean을 생성하여 등록 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/db.properties</value>
+			</list>
+		</property>		
+	</bean>
+	
+	<!--  우리는 1로 쓴다  -->
+	<!-- 접속정보를 가지고 datasource(접속,트랜젝션 등)을 위한 객체를 Bean으로 생성 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${user}"/>
+		<property name="password" value="${pw}"/>
+		<property name="defaultAutoCommit" value="true"/>
+	</bean>	
+	
+	<!-- 12^^번 -->
+	<!-- MyBatis 객체를 연결 정보를 spring 등록 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="/WEB-INF/spring/sqls/mybatis-configuration.xml"/>
+	</bean>
+	
+	<!-- 14^^번 -->
+	<!-- mybatis-spring 사용해서 DI로 사용함 -->
+	<!-- 생성된 Mybatis객체를 Spring 사용할 수 있는 Bean(Template) 등록 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSession"/>
+	</bean>
+	
+	<!-- 15^^번 -->
+	<!-- Transaction 처리 spring에 등록 -->
+	<!-- @Service에 설정 메소드 @Transactional 선언해주면 자동으로 예외 발생시 Rollback -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 16번 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 17번  -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" 
+			pointcut="execution(public * com.min.edu.model.*Service*.*(..))"/>
+	</aop:config>
+	
+	
+</beans>
