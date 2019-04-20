@@ -112,7 +112,7 @@ p{
 						for(int j = 0 ; j < 3 ; j++){
 				%>
 							<div style="float: left; margin-right: 50px;">
-							<input type="checkbox">&nbsp;&nbsp;제목이들어갈꺼에요 <br>
+							<input type="checkbox">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get(i*3+j).getCalid()%>"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
 							<img style="width: 180px; height: 135px;" src="./img/month.PNG">
 							</div>
 				<%
@@ -131,7 +131,7 @@ p{
 						for(int i = 0 ; i < lists.size()%3; i++){
 				%>
 						<div style="float: left; margin-right: 50px;">
-							 <input type="checkbox">&nbsp;&nbsp;제목이들어갈꺼에요 <br>
+							 <input type="checkbox">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get((lists.size()/3)*3+i).getCalid()%>"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
 							 <img style="width: 180px; height: 135px;" src="./img/month.PNG">
 						</div>
 				<%

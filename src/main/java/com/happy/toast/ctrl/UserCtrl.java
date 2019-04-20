@@ -1,12 +1,12 @@
 package com.happy.toast.ctrl;
 
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.happy.toast.dtos.ToastCalDTO;
 import com.happy.toast.dtos.ToastPagingDTO;
+import com.happy.toast.dtos.ToastScheduleDTO;
 import com.happy.toast.dtos.ToastUserDTO;
 import com.happy.toast.model.IToastCalService;
+import com.happy.toast.model.IToastScheduleService;
 import com.happy.toast.model.IToastUserService;
-import com.happy.toast.model.ToastCalDao;
-import com.happy.toast.model.ToastCalService;
+import com.happy.toast.modules.DateModule;
 
 
 @Controller
@@ -35,6 +35,9 @@ public class UserCtrl {
 	
 	@Autowired
 	private IToastUserService iUserService;
+	
+	@Autowired
+	private IToastScheduleService iScheduleService;
 	
 	@ResponseBody
 	@RequestMapping(value="/delete.do" , method = RequestMethod.POST)	
@@ -114,4 +117,129 @@ public class UserCtrl {
 		return "redirect:./userLogin.jsp";
 	}
 	
+	@RequestMapping(value="/schedulePage.do" , method=RequestMethod.GET)
+	public String schedulePage(Model model,String calid) {
+		
+		List<ToastScheduleDTO>	lists = iScheduleService.scheduleSelectAll(calid);
+		model.addAttribute("lists",lists);
+		return "schedulePage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/scheduleDeleteCtrl.do", method=RequestMethod.POST)
+	public Map<String,Integer> scheduleDelete(@RequestParam("scheduleid") String scheduleid) {		
+					
+		int isc = iScheduleService.scheduleDelete(scheduleid);
+					
+		// ajax 데이터 반환
+		Map<String,Integer> mapl = new HashMap<String,Integer>();
+		mapl.put("isc", isc);			
+		return mapl;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/scheduleUpdateCtrl.do" , method=RequestMethod.POST)
+	public Map<String,String> scheduleUpdate(HttpServletRequest request) {
+		
+		// 일정 정보 가져오기 		
+		String id = request.getParameter("scheduleid");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String isAllDay =request.getParameter("isAllDay");
+		char allday = (isAllDay.equalsIgnoreCase("true"))? 'T':'F';  
+						
+		//시작일 연산
+		String start = "";	
+		String startyear	= request.getParameter("startyear");		
+		String startmonth	= request.getParameter("startmonth");	
+		startmonth = DateModule.getInstance().changeDateFormat(startmonth);
+		String startday		= request.getParameter("startday");	
+		startday = DateModule.getInstance().changeDateFormat(startday);
+		String starthours	= request.getParameter("starthours");	
+		starthours = DateModule.getInstance().changeDateFormat(starthours);
+		String startminutes	= request.getParameter("startminutes");	
+		startminutes = DateModule.getInstance().changeDateFormat(startminutes);
+		start = startyear+"-"+startmonth+"-"+startday+" "+starthours+":"+startminutes+":00";
+						
+		//종료일 연산
+		String end = "";
+		String endyear 		= request.getParameter("endyear");		
+		String endmonth 	= request.getParameter("endmonth");
+		endmonth = DateModule.getInstance().changeDateFormat(endmonth);
+		String endday		= request.getParameter("endday");
+		endday = DateModule.getInstance().changeDateFormat(endday);
+		String endhours		= request.getParameter("endhours");
+		endhours = DateModule.getInstance().changeDateFormat(endhours);
+		String endminutes	= request.getParameter("endminutes");
+		endminutes = DateModule.getInstance().changeDateFormat(endminutes);
+		end = endyear+"-"+endmonth+"-"+endday+" "+endhours+":"+endminutes+":00";
+				
+						
+		String state = request.getParameter("state");			
+						
+		// Service 실행 
+		String calid = request.getParameter("calid");
+		String scheduletype = request.getParameter("scheduletype");
+		ToastScheduleDTO dto = new ToastScheduleDTO(id, calid, title, content, allday, start, end, "#FFFFFF", state, scheduletype);
+		iScheduleService.scheduleUpdate(dto);
+						
+		// ajax 데이터 반환
+		Map<String,String> mapl = new HashMap<String,String>();
+		mapl.put("id", id);				
+		return mapl;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/scheduleInsertCtrl.do" , method = RequestMethod.POST)
+	public Map<String,String> scheduleInsert(HttpServletRequest request) {
+		
+		// 일정 정보 가져오기 				
+				String id = request.getParameter("scheduleid");
+				String title = request.getParameter("title");
+				String content = request.getParameter("content");
+				String isAllDay =request.getParameter("isAllDay");
+				char allday = (isAllDay.equalsIgnoreCase("true"))? 'T':'F';  	
+				
+				//시작일 연산
+				String start = null;	
+				String startyear	= request.getParameter("startyear");		
+				String startmonth	= request.getParameter("startmonth");	
+				startmonth = DateModule.getInstance().changeDateFormat(startmonth);
+				String startday		= request.getParameter("startday");	
+				startday = DateModule.getInstance().changeDateFormat(startday);
+				String starthours	= request.getParameter("starthours");	
+				starthours = DateModule.getInstance().changeDateFormat(starthours);
+				String startminutes	= request.getParameter("startminutes");	
+				startminutes = DateModule.getInstance().changeDateFormat(startminutes);
+				start = startyear+"-"+startmonth+"-"+startday+" "+starthours+":"+startminutes+":00";
+				
+				//종료일 연산
+				String end = null;
+				String endyear 		= request.getParameter("endyear");		
+				String endmonth 	= request.getParameter("endmonth");
+				endmonth = DateModule.getInstance().changeDateFormat(endmonth);
+				String endday		= request.getParameter("endday");
+				endday = DateModule.getInstance().changeDateFormat(endday);
+				String endhours		= request.getParameter("endhours");
+				endhours = DateModule.getInstance().changeDateFormat(endhours);
+				String endminutes	= request.getParameter("endminutes");
+				endminutes = DateModule.getInstance().changeDateFormat(endminutes);
+				end = endyear+"-"+endmonth+"-"+endday+" "+endhours+":"+endminutes+":00";		
+				
+				String state = request.getParameter("state");					
+				
+				// Service 실행 
+				String calid = request.getParameter("calid");
+				String scheduletype = request.getParameter("scheduletype");
+				ToastScheduleDTO dto = new ToastScheduleDTO(id, calid, title, content, allday, start, end, "#FFFFFF", state, scheduletype);
+				
+				System.out.println("너 머냐?"+dto);
+				iScheduleService.scheduleInsert(dto);
+								
+				// ajax 데이터 반환
+				Map<String,String> mapl = new HashMap<String,String>();
+				mapl.put("id", id);				
+				return mapl;
+	}
 }
