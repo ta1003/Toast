@@ -1,6 +1,7 @@
 package com.happy.toast.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class ToastCalDao implements IToastCalDao{
 	}
 
 	@Override
-	public List<ToastCalDTO> calAllSelect() {
+	public List<ToastCalDTO> calAllSelect(Map<String,String> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NS+"calAllSelect",map);
 	}
 
 	@Override

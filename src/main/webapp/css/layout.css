@@ -19,13 +19,13 @@ body {
 
 #header {
 	background: #515ce6; /*헤더의 색상*/
-	flex: 2.5;
+	flex: 1.5;
 	display: flex; /* 내부 요소를 flex로 정렬함  */	
 }
 
 #toast {
-	flex: 6;
-	padding: 100px 200px;
+	flex: 7;
+	padding: 50px 150px;
 }
 
 #toast>in_con { /* 컨테이너 안의 div 가운데 정렬 */

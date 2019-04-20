@@ -10,13 +10,13 @@
 	
 	
 <!-- 페이지 처리한 전체 캘린더들 -->
- 	<select id="calPagingSelect" parameterType="java.util.Map" resultType="PDto">
+ 	<select id="calAllSelect" parameterType="java.util.Map" resultType="CDto">
  	SELECT RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
  	 FROM (SELECT ROWNUM RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
   		FROM (SELECT CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
         	 FROM TOASTCAL
        		   ORDER BY CALID))
-  		WHERE RNUM BETWEEN #{firstboardno} AND #{endboardno}
+  		WHERE RNUM BETWEEN #{firstcalno} AND #{endcalno}
    </select>   
    
   <!--페이지 처리를 위한 전체 캘린더 개수 -->   

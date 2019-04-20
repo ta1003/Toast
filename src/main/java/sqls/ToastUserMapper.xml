@@ -11,4 +11,5 @@
 		INSERT INTO TOASTUSER
 			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE)			
 	</insert>
+		
 </mapper>

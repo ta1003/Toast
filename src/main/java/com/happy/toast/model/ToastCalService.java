@@ -1,6 +1,7 @@
 package com.happy.toast.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,9 @@ public class ToastCalService implements IToastCalService{
 	}
 
 	@Override
-	public List<ToastCalDTO> calAllSelect() {
+	public List<ToastCalDTO> calAllSelect(Map<String,String> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return CDao.calAllSelect(map);
 	}
 
 	@Override

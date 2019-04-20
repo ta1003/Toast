@@ -50,7 +50,7 @@ public class UserCtrl {
 	
 	@RequestMapping(value="/scheduleDetail.do", method = RequestMethod.GET)
 	public String detail(String seq) {
-		System.out.println("으엉:"+seq);
+		System.out.println("상세보기:"+seq);
 		return "detail";
 	}
 	
@@ -70,17 +70,29 @@ public class UserCtrl {
 		int n = iCalService.calInsert(dto);
 		System.out.println(dto);			
 		return n;		
-	}
+	}	
 	
-	@ResponseBody	
-	@RequestMapping(value="/calSelectAll.do" , method = RequestMethod.POST)
-	public Map<String,String> select(HttpSession session){
-		Map<String,String> map = new HashMap<String,String>();
+	@RequestMapping(value="/calListCtrl.do" , method = RequestMethod.GET)
+	public String render(HttpSession session,Model model,String pageNo){
+		
+		if(pageNo == null || pageNo == "")
+			pageNo = "1";
+		
+		// pagingDTO 생성
 		int cnt = iCalService.calCnt();
-		ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 5);		
-		map.put("cnt", String.valueOf(cnt));
-		session.setAttribute("pDto", pDto);
-		return map;
+		ToastPagingDTO pDto = new ToastPagingDTO(5, Integer.parseInt(pageNo),cnt, 9);				
+		session.setAttribute("pDto", pDto);		
+		
+		// 페이징 처리
+		Map<String,String> pagingMap = new HashMap<String,String>();			
+		pagingMap.put("firstcalno", String.valueOf(pDto.getFirstBoardNo()));
+		pagingMap.put("endcalno", String.valueOf(pDto.getEndBoardNo()));	
+		//페이지만큼 뿌려줄 달력을 가져옴
+		List<ToastCalDTO> lists = iCalService.calAllSelect(pagingMap);
+		model.addAttribute("lists", lists);		
+		System.out.println("페이지에 몇개 뿌려주나 :"+lists.size());
+		
+		return "userMain";
 	}
 	
 	@RequestMapping(value="/userInsert.do" , method = RequestMethod.POST)
