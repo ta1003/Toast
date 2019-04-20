@@ -6,4 +6,6 @@ import com.happy.toast.dtos.ToastUserDTO;
 
 public interface IToastUserService {
 	public List<ToastUserDTO> userSelectAll();
+	
+	public int 				  userInsert(ToastUserDTO dto);
 }

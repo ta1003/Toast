@@ -22,4 +22,10 @@ public class ToastUserDao implements IToastUserDao{
 		return sqlSession.selectList(NS+"userSelectAll");
 	}
 
+	@Override
+	public int userInsert(ToastUserDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS+"userInsert", dto);
+	}
+
 }

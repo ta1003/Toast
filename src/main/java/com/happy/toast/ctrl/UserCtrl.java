@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.happy.toast.dtos.ToastCalDTO;
 import com.happy.toast.dtos.ToastPagingDTO;
+import com.happy.toast.dtos.ToastUserDTO;
 import com.happy.toast.model.IToastCalService;
+import com.happy.toast.model.IToastUserService;
 import com.happy.toast.model.ToastCalDao;
 import com.happy.toast.model.ToastCalService;
 
@@ -30,6 +32,9 @@ public class UserCtrl {
 
 	@Autowired
 	private IToastCalService iCalService;
+	
+	@Autowired
+	private IToastUserService iUserService;
 	
 	@ResponseBody
 	@RequestMapping(value="/delete.do" , method = RequestMethod.POST)	
@@ -45,13 +50,13 @@ public class UserCtrl {
 	
 	@RequestMapping(value="/scheduleDetail.do", method = RequestMethod.GET)
 	public String detail(String seq) {
-		System.out.println("?��?��?�� ?��?��:"+seq);
+		System.out.println("으엉:"+seq);
 		return "detail";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/calInsert.do" , method = RequestMethod.POST)
-	public int insert(HttpServletRequest req)
+	public int calinsert(HttpServletRequest req)
 	{
 		String caltitle = (String)req.getParameter("calTitle");
 		if(caltitle == null) caltitle =" ";
@@ -76,6 +81,25 @@ public class UserCtrl {
 		map.put("cnt", String.valueOf(cnt));
 		session.setAttribute("pDto", pDto);
 		return map;
+	}
+	
+	@RequestMapping(value="/userInsert.do" , method = RequestMethod.POST)
+	public String userinsert(HttpServletRequest req) {		
+		
+		// 입력된 값을 유저 객체에 저장 (예외처리 확인하고 넘어가야함)
+		String userid = req.getParameter("userid");		
+		String password = req.getParameter("userpassword");
+		String nickname = req.getParameter("usernickname");
+		String address = req.getParameter("useraddress");
+		String phone = req.getParameter("userphone");
+		String email = req.getParameter("useremail");
+		String auth = "U";
+		ToastUserDTO dto = new ToastUserDTO(userid, password, nickname, email, auth, "1");
+		dto.setAddress(address);
+		dto.setPhone(phone);
+		int cnt = iUserService.userInsert(dto);
+		System.out.println("userinsert 결과 :"+cnt);
+		return "redirect:./userLogin.jsp";
 	}
 	
 }

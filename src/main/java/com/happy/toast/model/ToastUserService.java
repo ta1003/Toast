@@ -19,4 +19,10 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userSelectAll();
 	}
 
+	@Override
+	public int userInsert(ToastUserDTO dto) {
+		// TODO Auto-generated method stub
+		return iUserDao.userInsert(dto);
+	}
+
 }

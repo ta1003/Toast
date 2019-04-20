@@ -28,7 +28,7 @@ public class ToastUserDTO implements Serializable {
 		this.email = email;
 		this.auth = auth;
 		this.regdate = regdate;
-	}
+	}	
 
 
 	public String getUserid() {
