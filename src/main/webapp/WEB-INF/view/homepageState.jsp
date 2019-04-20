@@ -21,19 +21,19 @@
 
 
 
-	<%-- <div style="padding-left: 53%;">
+	<div style="padding-left: 53%;">
 		<label>전체 방문자 <br>
 		 ${sessionScope.totalCount} 명 
 		</label><br>
 		<label style="float: right;">오늘 방문자<br>
 		 ${sessionScope.todayCount} 명
 		 </label>
-	</div> --%>
-	<div style="padding-right: 50px; padding-left: 50px;">
-			<div id="piechart-area" style="position: relative;">
-			<div id="barchart-area" style="float: right;"></div>
 	</div>
-
+	<div style="padding-right: 50px; padding-left: 50px;">
+		<div id="piechart-area" style="position: relative;">
+		<div id="barchart-area" style="float: right;"></div>
+		</div>
+	</div>
 
 
 
