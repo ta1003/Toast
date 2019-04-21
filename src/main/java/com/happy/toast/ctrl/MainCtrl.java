@@ -15,13 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.happy.toast.dtos.ToastCalDTO;
 import com.happy.toast.dtos.ToastPagingDTO;
+import com.happy.toast.dtos.ToastUserDTO;
 import com.happy.toast.dtos.ToastVisitDTO;
 import com.happy.toast.model.IToastCalService;
+import com.happy.toast.model.IToastUserService;
 import com.happy.toast.model.ToastVisitDao;
 
 @Controller
@@ -34,16 +37,28 @@ public class MainCtrl {
 	private IToastCalService iCalService;
 	
 	@Autowired
+	private IToastUserService iUserService;
+	
+	@Autowired
 	private SqlSession sqlsession;
 	
 	@Autowired
 	private ToastVisitDao vdao;
 	
 	
-	@RequestMapping(value = "/login.do" , method = RequestMethod.GET)
-	public String login(String auth,HttpSession session,ToastVisitDTO vdto, Model model) throws Exception {
+	@RequestMapping(value = "/login.do" , method = RequestMethod.POST)
+	public String login(String auth,HttpSession session,ToastVisitDTO vdto, Model model,HttpServletRequest request) throws Exception {
 		
-		if(auth.equalsIgnoreCase("U")) {
+		// 회원정보 세션에 담음
+		Map<String,String> map = new HashMap<String,String>();			
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		map.put("userid", userid);
+		map.put("password", password);
+		ToastUserDTO uDto = iUserService.userSelectOne(map);
+		model.addAttribute("uDto", uDto);
+		
+		if(uDto.getAuth().equalsIgnoreCase("U")) {
 			
 			//페이징 처리를 위한 pageDto 생성			
 			int cnt = iCalService.calCnt();
@@ -112,6 +127,22 @@ public class MainCtrl {
 		else {
 			return "adminPage";
 		}		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/loginform.do" , method=RequestMethod.POST)
+	public Map<String,String> loginForm(HttpServletRequest request){
+		Map<String,String> map = new HashMap<String,String>();			
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		map.put("userid", userid);
+		map.put("password", password);
+		ToastUserDTO dto = iUserService.userSelectOne(map);
+		
+		Map<String,String> resultmap = new HashMap<String,String>();	
+		if(dto != null) {resultmap.put("result", "true");}
+		else			{resultmap.put("result", "false");}
+		return resultmap;
 	}
 	
 	@RequestMapping(value= "/signUp.do" , method = RequestMethod.GET)

@@ -1,6 +1,7 @@
 package com.happy.toast.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class ToastUserDao implements IToastUserDao{
 	public int userInsert(ToastUserDTO dto) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"userInsert", dto);
+	}
+
+	@Override
+	public ToastUserDTO userSelectOne(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userSelectOne", map);
 	}
 
 }
