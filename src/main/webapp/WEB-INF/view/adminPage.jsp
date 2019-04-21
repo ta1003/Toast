@@ -23,7 +23,13 @@ var ajaxAdminShow = function (){
 		data : "cmd=1",
 		dataType : "json",
 		success : function(obj){			
-				alert("됬느야");					
+//				alert("됬느야");
+				alert(obj.lists[0].address);	
+				
+				
+				
+				
+				
 		} , error : function() {
 			alert("실패");
 		}
@@ -35,11 +41,14 @@ var ajaxAdminShow = function (){
 </script>
 
 <body>
-	<a href="#" onclick="adminShow(); return false;">Show All Users</a>
+	<a href="#" onclick="adminShow()">Show All Users</a>
 	<br>
 	<a href="./homepageState.do">Check Connected Users</a>
 	<br>
 	<a href="./logout.do">Log Out</a>
+
+	${ulists}
+
 
 	<div id="container">
 		<form action="#" method="post" id="frm">

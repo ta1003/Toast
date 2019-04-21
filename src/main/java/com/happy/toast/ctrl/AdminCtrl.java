@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +43,49 @@ public class AdminCtrl {
 		return "homepageState";
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	private JSONObject objectJson(List<ToastUserDTO> lists) {
+		JSONObject json = new JSONObject();
+		JSONArray jLists = new JSONArray();
+		JSONObject jList = null;
+		
+		for (ToastUserDTO dto : lists) {
+			jList = new JSONObject();                       
+			jList.put("userid", dto.getUserid());            
+			jList.put("nickname", dto.getNickname());                
+			jList.put("address", dto.getAddress());               
+			jList.put("phone", dto.getPhone());          
+			jList.put("email", dto.getEmail());       
+			jList.put("auth", dto.getAuth());           
+			jList.put("regdate", dto.getRegdate());           
+			
+			
+			jLists.add(jList);
+		}
+	
+		json.put("lists", jLists);
+		
+		return json;
+	
+	}
+	
+	
+	
+	
 	@ResponseBody
-	@RequestMapping(value="/adminShowAll.do", method=RequestMethod.POST)
-	public Map<String, String> adminShowAll(Model model) {
+	@RequestMapping(value="/adminShowAll.do", method=RequestMethod.POST, produces="application/text; charset=UTF-8")
+	public String adminShowAll(Model model) {
+		JSONObject json = null;
+		json = objectJson(iUserService.userSelectAll());
 		
-		logger.info("Controller adminShowAll{} ");
+		/*Map<String, ToastUserDTO> map = new HashMap<String, ToastUserDTO>();
+		List<ToastUserDTO> ulists =  iUserService.userSelectAll();
 		
-		String id ="test00";
+		map.put("ulists", (ToastUserDTO)ulists);*/
+		logger.info("Controller adminShowAll{}",json.toString());
+		
+		/*String id ="test00";
 		String nickname="TT";
 		String address="서울시";
 		String phone="111";
@@ -64,10 +102,10 @@ public class AdminCtrl {
 		
 		System.out.println(model);
 		System.out.println(map);
-		model.addAttribute("dto", map);
-		List<ToastUserDTO> lists =  iUserService.userSelectAll();
-		System.out.println(lists.get(0));
-		return map;
+		model.addAttribute("dto", map);*/
+//		List<ToastUserDTO> lists =  iUserService.userSelectAll();
+//		System.out.println(lists);
+		return json.toString();
 	}
 	
 	
