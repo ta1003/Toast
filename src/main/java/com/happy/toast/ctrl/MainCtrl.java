@@ -43,11 +43,7 @@ public class MainCtrl {
 	private SqlSession sqlsession;
 	
 	@Autowired
-	private ToastVisitDao vdao;
-	
-	@Autowired
-	private IToastUserService iUserService;
-	
+	private ToastVisitDao vdao;		
 	
 	@RequestMapping(value = "/login.do" , method = RequestMethod.POST)
 	public String login(String auth,HttpSession session,ToastVisitDTO vdto, Model model,HttpServletRequest request) throws Exception {
