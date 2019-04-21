@@ -84,13 +84,14 @@ p{
 							};
 
 							$.ajax({
-								url : "delete.do",
+								url : "calDelete.do",
 								type : "post",
 								asyn : false,
 								data : allData,
 								dataType : "json",
 								success : function(msg) {
-									alert("성공!! 삭제된 개수:" + msg.result);
+									alert("삭제여부(1.성공 2.실패):" + msg.result);
+									location.href= "./calListCtrl.do?pageNo="+<%=pDto.getNowPageNo()%>;
 								},
 								error : function() {
 									alert("실패");
@@ -112,7 +113,7 @@ p{
 						for(int j = 0 ; j < 3 ; j++){
 				%>
 							<div style="float: left; margin-right: 50px;">
-							<input type="checkbox">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get(i*3+j).getCalid()%>"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
+							<input type="checkbox" name="chk" value="<%=lists.get(i*3+j).getCalid()%>">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get(i*3+j).getCalid()%>"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
 							<img style="width: 180px; height: 135px;" src="./img/month.PNG">
 							</div>
 				<%
@@ -131,7 +132,7 @@ p{
 						for(int i = 0 ; i < lists.size()%3; i++){
 				%>
 						<div style="float: left; margin-right: 50px;">
-							 <input type="checkbox">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get((lists.size()/3)*3+i).getCalid()%>"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
+							 <input type="checkbox" name="chk" value="<%=lists.get((lists.size()/3)*3+i).getCalid()%>">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get((lists.size()/3)*3+i).getCalid()%>"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
 							 <img style="width: 180px; height: 135px;" src="./img/month.PNG">
 						</div>
 				<%

@@ -14,13 +14,23 @@
  	SELECT RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
  	 FROM (SELECT ROWNUM RNUM,CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
   		FROM (SELECT CALID, CALTITLE, CALCONTENT, USERID,CALTYPE
-        	 FROM TOASTCAL
+        	 FROM TOASTCAL WHERE USERID=#{userid} 
        		   ORDER BY CALID))
   		WHERE RNUM BETWEEN #{firstcalno} AND #{endcalno}
    </select>   
    
   <!--페이지 처리를 위한 전체 캘린더 개수 -->   
-  <select id="calCnt" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM TOASTCAL
+  <select id="calCnt" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(*) FROM TOASTCAL WHERE USERID=#{userid}
 	</select>
+	
+	
+	<delete id="calDelete" parameterType="java.lang.String">
+		DELETE FROM TOASTCAL WHERE CALID=#{calid}
+	</delete>
+	
+	<!-- 해당 달력을 지웠을때 일정까지 다 지우는 쿼리 -->
+	<delete id="scheduleMultiDelete" parameterType="java.lang.String">
+		DELETE FROM TOASTSCHEDULE WHERE CALID=#{calid}
+	</delete>
 </mapper>

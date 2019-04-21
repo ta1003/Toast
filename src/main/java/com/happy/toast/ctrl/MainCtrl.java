@@ -57,7 +57,7 @@ public class MainCtrl {
 		map.put("userid", userid);
 		map.put("password", password);
 		ToastUserDTO uDto = iUserService.userSelectOne(map);
-		model.addAttribute("uDto", uDto);
+		session.setAttribute("uDto", uDto);
 		
 		if(uDto.getAuth().equalsIgnoreCase("U")) {
 
@@ -107,20 +107,18 @@ public class MainCtrl {
 		
 						
 			//페이징 처리를 위한 pageDto 생성			
-			int cnt = iCalService.calCnt();
+			int cnt = iCalService.calCnt(uDto.getUserid());
 			ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 9);				
 			session.setAttribute("pDto", pDto);			
 			
 			// 화면에 뿌려줄 갯수를 맵에 저장
-			Map<String,String> pagingMap = new HashMap<String,String>();						
+			Map<String,String> pagingMap = new HashMap<String,String>();
+			pagingMap.put("userid", uDto.getUserid());
 			pagingMap.put("firstcalno", String.valueOf(pDto.getFirstBoardNo()));
 			pagingMap.put("endcalno", String.valueOf(pDto.getEndBoardNo()));	
 			// 페이지만큼 뿌려줄 달력을 가져옴
 			List<ToastCalDTO> lists = iCalService.calAllSelect(pagingMap);
-			model.addAttribute("lists", lists);
-			// 잘들어갔나 확인
-			System.out.println(lists.get(0));
-			
+			model.addAttribute("lists", lists);			
 			
 			return "userMain";
 		}		
