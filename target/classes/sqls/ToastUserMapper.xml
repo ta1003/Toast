@@ -9,17 +9,13 @@
 	
 	<insert id="userInsert" parameterType="UDto">
 		INSERT INTO TOASTUSER
-<<<<<<< HEAD
 			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE,'F')			
-	</insert>
-=======
-			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE)			
-	</insert>		
+	</insert>	
 	
 	<select id="userSelectOne" resultType="UDto" parameterType="java.util.Map">
 		SELECT USERID,PASSWORD,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
 				FROM TOASTUSER WHERE USERID=#{userid} AND PASSWORD=#{password}
 	</select>
->>>>>>> refs/remotes/origin/master
+
 		
 </mapper>
