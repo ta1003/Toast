@@ -103,7 +103,7 @@ var ajaxModify = function () {
 </script>
 
 <body>
-	${lists}
+	
 	<a href="#" onclick="adminShow()">Show All Users</a>
 	<br>
 	<a href="./homepageState.do">Check Connected Users</a>

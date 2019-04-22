@@ -58,12 +58,11 @@ public class MainCtrl {
 		ToastUserDTO uDto = iUserService.userSelectOne(map);
 		session.setAttribute("uDto", uDto);
 		
-		if(uDto.getAuth().equalsIgnoreCase("U")) {
-
-		/*// request를 파라미터에 넣지 않고도 사용할수 있도록 설정
+		// request를 파라미터에 넣지 않고도 사용할수 있도록 설정
 		HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		
-		
+		vdto.setUserid(userid);
+		System.out.println("로그인 아이디 :"+userid);
 		// 접속자 브라우저 확인
 		if(req.getHeader("User-Agent").indexOf("Chrome")!=-1) {
 			vdto.setBrowser("Chrome");
@@ -79,9 +78,9 @@ public class MainCtrl {
 			vdto.setBrowser("Etc");
 		}	
 		System.out.println("접속자 브라우저 "+req.getHeader("User-Agent"));
-		
+		// 접속한 회원 정보 DB입력
 		vdao.insertVisit(vdto, sqlsession);
-		logger.info("insertVisit 접속자 정보입력");*/
+		logger.info("insertVisit 접속자 정보입력");
 		
 				
 		int todayCount = 0;
@@ -104,7 +103,9 @@ public class MainCtrl {
 		logger.info("todayCount 금일방문자수 :"+todayCount);
 		logger.info("totalCount 전체방문자수 :"+totalCount);
 		
-						
+		
+		if(uDto.getAuth().equalsIgnoreCase("U")) {
+
 			//페이징 처리를 위한 pageDto 생성			
 			int cnt = iCalService.calCnt(uDto.getUserid());
 			ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 9);				
