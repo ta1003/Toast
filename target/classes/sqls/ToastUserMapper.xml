@@ -9,17 +9,26 @@
 	
 	<insert id="userInsert" parameterType="UDto">
 		INSERT INTO TOASTUSER
-<<<<<<< HEAD
 			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE,'F')			
-	</insert>
-=======
-			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE)			
-	</insert>		
+	</insert>	
 	
 	<select id="userSelectOne" resultType="UDto" parameterType="java.util.Map">
 		SELECT USERID,PASSWORD,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
 				FROM TOASTUSER WHERE USERID=#{userid} AND PASSWORD=#{password}
 	</select>
->>>>>>> refs/remotes/origin/master
+	<!-- 아이디 중복 체크를 위한 쿼리문 -->
+	<select id="userIdChk" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT USERID FROM TOASTUSER WHERE USERID=#{userid}
+	</select>
+	
+	<!-- 닉네임 중복 체크를 위한 쿼리문 -->
+	<select id="userNicknameChk" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT NICKNAME FROM TOASTUSER WHERE NICKNAME=#{nickname}
+	</select>
+	
+	<!-- 이메일 중복 체크를 위한 쿼리문 -->
+	<select id="userEmailChk" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT EMAIL FROM TOASTUSER WHERE EMAIL=#{email}
+	</select>
 		
 </mapper>
