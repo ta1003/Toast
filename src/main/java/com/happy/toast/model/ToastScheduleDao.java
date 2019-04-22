@@ -2,7 +2,7 @@ package com.happy.toast.model;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import com.happy.toast.dtos.ToastScheduleDTO;
 public class ToastScheduleDao implements IToastScheduleDao{
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSessionTemplate sqlSession;
 	
 	private static String NS = "com.happy.toast.schedule.";
 	
