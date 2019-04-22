@@ -50,19 +50,5 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- Transaction처리 method별로 @annotation으로 해주는 것이 아니라 
-		AOP에 의해서 pointcut으로 작성된 위치에 특정 행위(Exception)가 발생했을때 작동 -->	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>
-		</tx:attributes>
-	</tx:advice>
-	
-	<!-- 17번  -->
-	<aop:config>
-		<aop:advisor advice-ref="txAdvice" 
-			pointcut="execution(public * com.happy.toast.model.*Service*.*(..))"/>
-	</aop:config>
-	
 	
 </beans>
