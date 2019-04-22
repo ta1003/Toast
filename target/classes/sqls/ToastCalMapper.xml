@@ -8,6 +8,14 @@
 				#{caltitle},#{calcontent},#{userid},#{caltype})
 	</insert>
 	
+	<select id="calSelect" parameterType="java.lang.String" resultType="CDto">
+		SELECT CALTITLE, CALCONTENT, USERID,CALTYPE 
+			FROM TOASTCAL WHERE CALID=#{calid}
+	</select>
+	
+	<update id="calUpdate" parameterType="CDto">
+		UPDATE TOASTCAL SET CALTITLE=#{caltitle}, CALCONTENT=#{calcontent}, CALTYPE=#{caltype} WHERE CALID=#{calid}
+	</update>
 	
 <!-- 페이지 처리한 전체 캘린더들 -->
  	<select id="calAllSelect" parameterType="java.util.Map" resultType="CDto">

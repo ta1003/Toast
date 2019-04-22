@@ -32,4 +32,22 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userSelectOne(map);
 	}
 
+	@Override
+	public String userIdChk(String userid) {
+		// TODO Auto-generated method stub
+		return iUserDao.userIdChk(userid);
+	}
+
+	@Override
+	public String userNicknameChk(String userNickname) {
+		// TODO Auto-generated method stub
+		return iUserDao.userNicknameChk(userNickname);
+	}
+
+	@Override
+	public String userEmailChk(String userEmail) {
+		// TODO Auto-generated method stub
+		return iUserDao.userEmailChk(userEmail);
+	}
+
 }

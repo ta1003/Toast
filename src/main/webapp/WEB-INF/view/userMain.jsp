@@ -7,7 +7,7 @@
 
 <%
 	ToastPagingDTO pDto = (ToastPagingDTO)session.getAttribute("pDto");
-	List<ToastCalDTO> lists = (List<ToastCalDTO>)request.getAttribute("lists");
+	List<ToastCalDTO> lists = (List<ToastCalDTO>)request.getAttribute("lists");	
 %>
 
 <!DOCTYPE html>
@@ -34,17 +34,24 @@ p{
 }
 </style>
 
+
+
 <script type="text/javascript">
 	$(document).ready(function() {						
 		
 						// 일정 생성 폼		
 						$("#createCalendarForm").click(function() {
-							$("#myModal").modal();
+							$("#createModal").modal();
 						});
+						
+						
 
 						// 일정 등록 완료
-						$("#createCalendar").click(
-										function() {
+						$("#createCalendar").click(function() {
+							if($("#calTitle").val() == ""){
+								alert("제목에 값을 입력해주세요.");
+							}
+							else{
 											$.ajax({
 												url : "calInsert.do",
 												type : "post",
@@ -55,7 +62,7 @@ p{
 														+ $("#calContent")
 																.val()
 														+ "&calType="
-														+ $("#calType").val(),
+														+ $("#calType option:selected").val(),
 												dataType : "json",
 												success : function(msg) {
 													if (msg == "1")
@@ -70,8 +77,10 @@ p{
 													alert("ajax 실패");
 												}
 											});
+							}
+										
 						});
-
+						// 일정 삭제
 						$("#deleteCalendarForm").click(function() {
 
 							var chkValues = [];
@@ -98,7 +107,78 @@ p{
 								}
 							});
 						});
+						
+						
+						$("#detailCalendar").click(function() {
+							location.href = "./schedulePage.do?calid="+$("#calDetailid").val();
+						});
+	});
+	
+	// 달력 상세정보 보기
+	function showCal(val) {	
+		$("#calDetailid").val(val);
+	  	$.ajax({
+			url : "calDetail.do",
+			type : "post",
+			asyn : false,
+			data : { "calid":val },
+			dataType: "json",
+			success : function(msg) {					
+				alert(msg.type);
+				$("#detailTitle").val(msg.title);
+				$("#detailContent").val(msg.content);					
+				$("#"+msg.type).attr('selected',"selected");
+				$("#detailModal").modal();
+			},
+			error : function() {
+				alert("실패");
+			}
+		});  	
+	}
+	
+	// 달력 수정시
+	function calUpdate() {		
+		if($("#updateBtn").val() == "false"){
+			$("#detailTitle").removeAttr('readonly');
+			$("#detailContent").removeAttr('readonly');
+			$("#detailType").removeAttr('disabled');
+			$("#updateBtn").html("수정완료");
+			$("#updateBtn").val("true");
+			$("#detailCalendar").hide();
+		}else{
+			var calid = $("#calDetailid").val();
+			var calTitle = $("#detailTitle").val();
+			var calContent = $("#detailContent").val();
+			var calType = $("#detailType option:selected").val();
+				if(calTitle == null || calTitle == ""){
+					alert("제목에 입력된 값이 없습니다.");
+				}
+				else{
+					$.ajax({
+						url : "calUpdate.do",
+						type : "post",
+						asyn : false,
+						data : { "calid":calid, "calTitle": calTitle,"calContent": calContent, "calType": calType},
+						dataType: "json",
+						success : function(msg) {					
+							alert(msg.result);			
+							$("#detailTitle").attr('readonly','readonly');
+							$("#detailContent").attr('readonly','readonly');
+							$("#detailType").attr('disabled','disabled');
+							$("#updateBtn").html("수정");
+							$("#updateBtn").val("false");
+							$("#detailCalendar").show();
+							$("#"+calid).html(calTitle);
+						},
+						error : function() {
+							alert("실패");
+						}
 					});
+				}
+		}
+		//alert(calid);
+	}
+	
 </script>
 <body>
 	<div id="layout">					
@@ -113,7 +193,7 @@ p{
 						for(int j = 0 ; j < 3 ; j++){
 				%>
 							<div style="float: left; margin-right: 50px;">
-							<input type="checkbox" name="chk" value="<%=lists.get(i*3+j).getCalid()%>">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get(i*3+j).getCalid()%>"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
+							<input type="checkbox" name="chk" value="<%=lists.get(i*3+j).getCalid()%>">&nbsp;&nbsp;<a  id="<%=lists.get(i*3+j).getCalid()%>" href='#' onclick="showCal('<%=lists.get(i*3+j).getCalid()%>')"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
 							<img style="width: 180px; height: 135px;" src="./img/month.PNG">
 							</div>
 				<%
@@ -132,7 +212,7 @@ p{
 						for(int i = 0 ; i < lists.size()%3; i++){
 				%>
 						<div style="float: left; margin-right: 50px;">
-							 <input type="checkbox" name="chk" value="<%=lists.get((lists.size()/3)*3+i).getCalid()%>">&nbsp;&nbsp;<a href="./schedulePage.do?calid=<%=lists.get((lists.size()/3)*3+i).getCalid()%>"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
+							 <input type="checkbox" name="chk" value="<%=lists.get((lists.size()/3)*3+i).getCalid()%>">&nbsp;&nbsp;<a id="<%=lists.get((lists.size()/3)*3+i).getCalid()%>" href='#' onclick="showCal('<%=lists.get((lists.size()/3)*3+i).getCalid()%>')"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
 							 <img style="width: 180px; height: 135px;" src="./img/month.PNG">
 						</div>
 				<%
@@ -170,7 +250,7 @@ p{
 
 			<div class="container">
 				<!-- Modal -->
-				<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal fade" id="createModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -212,7 +292,59 @@ p{
 						</div>
 					</div>				
 			</div>
-		</div>
+			
+			
+			<!-- 해당 달력에 대한 상세정보 모달 -->
+			<div class="container">
+				<!-- Modal -->
+				<div class="modal fade" id="detailModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header" style="padding: 35px 50px;">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4>일정 상세 정보</h4>
+							</div>
+							<div class="modal-body" style="padding: 40px 50px;">
+								<form role="form">
+									<div class="form-group">
+										<label for="detailType">일정 타입</label> <select id="detailType"
+											name="detailType" disabled="disabled">
+											<option value="month" id="month">월간</option>
+											<option value="week" id="week">주간</option>
+											<option value="day" id="day">일간</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="detailTitle">일정 제목</label> <input type="text"
+											class="form-control" id="detailTitle" name="detailTitle" readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label for="detailContent">일정 설명</label>
+										<textarea cols="7" rows="10" class="form-control"
+											id="detailContent" name="detailContent" readonly="readonly"></textarea>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-success btn-default pull-left"
+									data-dismiss="modal" id="detailCalendar">일정 상세보기</button>
+								<button class="btn btn-primary btn-default pull-left" id="updateBtn"
+									onclick="calUpdate()" value="false">수정</button>
+
+								<button class="btn btn-danger btn-default pull-right"
+									data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> 취소
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			</div>
+			<input type="hidden" id="calDetailid">
 		<%@ include file="/WEB-INF/view/Footer.jsp"%>
 	</div>
 </body>

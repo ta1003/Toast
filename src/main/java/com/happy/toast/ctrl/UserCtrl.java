@@ -40,6 +40,43 @@ public class UserCtrl {
 	private IToastScheduleService iScheduleService;
 	
 	@ResponseBody
+	@RequestMapping(value="/userIdChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userIdChk(@RequestParam(value="userid") String userid){
+		String id = iUserService.userIdChk(userid);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/userNicknameChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userNicknameChk(@RequestParam(value="usernickname") String userNickname){
+		String id = iUserService.userNicknameChk(userNickname);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/userEmailChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userEmailChk(@RequestParam(value="useremail") String useremail){
+		String id = iUserService.userEmailChk(useremail);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value="/calDelete.do" , method = RequestMethod.POST)	
 	public Map<String, Integer> init(Model model, @RequestParam(value="checkArray[]") List<String> arrayParams) {
 		System.out.println(arrayParams);
@@ -61,6 +98,41 @@ public class UserCtrl {
 		System.out.println("상세보기:"+seq);
 		return "detail";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/calUpdate.do" , method=RequestMethod.POST)
+	public Map<String,String> calUpdate(HttpServletRequest req,@RequestParam("calid") String calid){
+		
+		
+		String caltitle = (String)req.getParameter("calTitle");		
+		String calcontent = (String)req.getParameter("calContent");
+		if(calcontent == null) calcontent =" ";		
+		String caltype = (String)req.getParameter("calType");
+		if(caltype == null) caltype =" ";
+		
+		ToastCalDTO dto = new ToastCalDTO(Integer.parseInt(calid), caltitle, calcontent, " ", caltype);	
+		int n = iCalService.calUpdate(dto);
+		
+		Map<String,String> map = new HashMap<String,String>();		
+		if(n >= 1)	map.put("result", "수정되었습니다.");
+		else		map.put("result", "수정실패");
+		return map;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/calDetail.do", method=RequestMethod.POST)
+	public Map<String,String> calDetail(HttpServletRequest req,@RequestParam("calid") String calid) {
+	
+		ToastCalDTO cDto = iCalService.calSelect(calid);	
+		
+		Map<String,String> map = new HashMap<String,String>();		
+		map.put("content", cDto.getCalcontent());
+		map.put("title", cDto.getCaltitle());
+		map.put("type", cDto.getCaltype());		
+		return map;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/calInsert.do" , method = RequestMethod.POST)
@@ -114,7 +186,9 @@ public class UserCtrl {
 		String password = req.getParameter("userpassword");
 		String nickname = req.getParameter("usernickname");
 		String address = req.getParameter("useraddress");
+		if(address == "" || address == null) address="없음";
 		String phone = req.getParameter("userphone");
+		if(phone == "" || phone == null) phone="없음";
 		String email = req.getParameter("useremail");
 		String auth = "U";
 		ToastUserDTO dto = new ToastUserDTO(userid, password, nickname, email, auth, "1");
@@ -130,6 +204,9 @@ public class UserCtrl {
 		
 		List<ToastScheduleDTO>	lists = iScheduleService.scheduleSelectAll(calid);
 		model.addAttribute("lists",lists);
+		ToastCalDTO cDto = iCalService.calSelect(calid);
+		model.addAttribute("caltype", cDto.getCaltype());
+		model.addAttribute("calTitle", cDto.getCaltitle());
 		return "schedulePage";
 	}
 	

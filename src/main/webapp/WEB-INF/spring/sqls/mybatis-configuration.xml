@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-<!-- 13^^번 -->
+<!-- DTO를 선언하여 Alias를 통해 쉽게 사용 (없어도 무방함) -->
 	<typeAliases>
 		<typeAlias type="com.happy.toast.dtos.ToastCalDTO" alias="CDto"/>
 		<typeAlias type="com.happy.toast.dtos.ToastPagingDTO" alias="PDto"/>
@@ -9,7 +9,10 @@
 		<typeAlias type="com.happy.toast.dtos.ToastUserDTO" alias="UDto"/>
 		<typeAlias type="com.happy.toast.dtos.ToastScheduleDTO" alias="SDto"/>
 	</typeAliases>
+	
+	<!-- 데이터베이스 커넥션 환경 : SpringFramework가 Bean으로 제공 -->
 
+<!-- Statement(쿼리문장) xml을 연결 -->
 	<mappers>
 		<mapper resource="/sqls/ToastCalMapper.xml"/>
 		<mapper resource="/sqls/ToastVisitMapper.xml"/>

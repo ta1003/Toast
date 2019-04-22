@@ -106,7 +106,7 @@
 	  // template : 달력 양식 지정
 	  // calendars : 일정 양식 지정
 	  var calendar = new Calendar('#calendar', {
-		  defaultView: 'month',			  
+		  defaultView: '${caltype}',			  
 		  template: templates,
 		  useCreationPopup: true,
 		  useDetailPopup: true,
@@ -326,14 +326,10 @@
 
 <body>
 <h1>
-	일정 게시판
+	CALENDAR : ${calTitle} 
 </h1>	  	
 	<div id="menu">
-	  <p id="now"></p>
-	  <select id="calType">
-	  	 <option value="month">월간</option>	 	
-	 	 <option value="week">주간</option>	 	 	 	
-	  </select>
+	  <p id="now"></p>	
       <button id="prev">◀</button>
       <button id="next">▶</button>      
     </div>

@@ -1,9 +1,10 @@
 package com.happy.toast.model;
 
 import java.util.List;
+
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import com.happy.toast.dtos.ToastCalDTO;
 public class ToastCalDao implements IToastCalDao{
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSessionTemplate sqlSession;
 	
 	private static String NS = "com.happy.toast.cal.";
 	
@@ -27,9 +28,16 @@ public class ToastCalDao implements IToastCalDao{
 	@Override
 	public int calDelete(String calid) {
 		// TODO Auto-generated method stub		
-		sqlSession.delete(NS+"scheduleMultiDelete", calid);				
+						
 		return sqlSession.delete(NS+"calDelete",calid);		
+	}	
+	
+	@Override
+	public int scheduleMultiDelete(String calid) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NS+"scheduleMultiDelete", calid);		
 	}
+
 
 	@Override
 	public List<ToastCalDTO> calAllSelect(Map<String,String> map) {
@@ -38,9 +46,9 @@ public class ToastCalDao implements IToastCalDao{
 	}
 
 	@Override
-	public ToastCalDTO calSelect() {
+	public ToastCalDTO calSelect(String calid) {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne(NS+"calSelect", calid);
 	}
 
 	@Override
@@ -49,4 +57,11 @@ public class ToastCalDao implements IToastCalDao{
 		return sqlSession.selectOne(NS+"calCnt",userid);
 	}
 
+	@Override
+	public int calUpdate(ToastCalDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+"calUpdate", dto);
+	}
+
+	
 }

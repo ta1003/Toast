@@ -58,7 +58,7 @@ public class AdminCtrl {
 			jList.put("phone", dto.getPhone());          
 			jList.put("email", dto.getEmail());       
 			jList.put("auth", dto.getAuth());           
-			jList.put("regdate", dto.getRegdate());           
+			jList.put("regdate", dto.getRegdate().substring(0, dto.getRegdate().indexOf(" ")));           
 			jList.put("delflag", dto.getDelflag());
 			
 			jLists.add(jList);
@@ -77,34 +77,11 @@ public class AdminCtrl {
 	@RequestMapping(value="/adminShowAll.do", method=RequestMethod.POST, produces="application/text; charset=UTF-8")
 	public String adminShowAll(Model model) {
 		JSONObject json = null;
+		// 회원 정보 전체 조회를 JSON에 담음
 		json = objectJson(iUserService.userSelectAll());
-		
-		/*Map<String, ToastUserDTO> map = new HashMap<String, ToastUserDTO>();
-		List<ToastUserDTO> ulists =  iUserService.userSelectAll();
-		
-		map.put("ulists", (ToastUserDTO)ulists);*/
 		logger.info("Controller adminShowAll{}",json.toString());
 		
-		/*String id ="test00";
-		String nickname="TT";
-		String address="서울시";
-		String phone="111";
-		String email="jjj@jjj.com";
-		String block="N";
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("id", id);
-		map.put("nickname", nickname);
-		map.put("address", address);
-		map.put("phone", phone);
-		map.put("email", email);
-		map.put("block", block);
-		
-		System.out.println(model);
-		System.out.println(map);
-		model.addAttribute("dto", map);*/
-//		List<ToastUserDTO> lists =  iUserService.userSelectAll();
-//		System.out.println(lists);
 		return json.toString();
 	}
 	
