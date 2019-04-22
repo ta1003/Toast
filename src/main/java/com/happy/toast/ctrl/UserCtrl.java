@@ -40,6 +40,43 @@ public class UserCtrl {
 	private IToastScheduleService iScheduleService;
 	
 	@ResponseBody
+	@RequestMapping(value="/userIdChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userIdChk(@RequestParam(value="userid") String userid){
+		String id = iUserService.userIdChk(userid);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/userNicknameChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userNicknameChk(@RequestParam(value="usernickname") String userNickname){
+		String id = iUserService.userNicknameChk(userNickname);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/userEmailChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userEmailChk(@RequestParam(value="useremail") String useremail){
+		String id = iUserService.userEmailChk(useremail);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value="/calDelete.do" , method = RequestMethod.POST)	
 	public Map<String, Integer> init(Model model, @RequestParam(value="checkArray[]") List<String> arrayParams) {
 		System.out.println(arrayParams);
@@ -114,7 +151,9 @@ public class UserCtrl {
 		String password = req.getParameter("userpassword");
 		String nickname = req.getParameter("usernickname");
 		String address = req.getParameter("useraddress");
+		if(address == "" || address == null) address="없음";
 		String phone = req.getParameter("userphone");
+		if(phone == "" || phone == null) phone="없음";
 		String email = req.getParameter("useremail");
 		String auth = "U";
 		ToastUserDTO dto = new ToastUserDTO(userid, password, nickname, email, auth, "1");

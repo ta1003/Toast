@@ -35,4 +35,22 @@ public class ToastUserDao implements IToastUserDao{
 		return sqlSession.selectOne(NS+"userSelectOne", map);
 	}
 
+	@Override
+	public String userIdChk(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userIdChk",userid);
+	}
+
+	@Override
+	public String userNicknameChk(String userNickname) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userNicknameChk", userNickname);
+	}
+
+	@Override
+	public String userEmailChk(String userEmail) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userEmailChk", userEmail);
+	}
+
 }

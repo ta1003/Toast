@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.happy.toast.dtos.ToastCalDTO;
 
@@ -21,9 +22,12 @@ public class ToastCalService implements IToastCalService{
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public int calDelete(String calid) {
 		// TODO Auto-generated method stub
-		return CDao.calDelete(calid);
+		int result1 = CDao.scheduleMultiDelete(calid);
+		int result2 = CDao.calDelete(calid);
+		return result1+result2;
 	}
 
 	@Override

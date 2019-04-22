@@ -27,9 +27,16 @@ public class ToastCalDao implements IToastCalDao{
 	@Override
 	public int calDelete(String calid) {
 		// TODO Auto-generated method stub		
-		sqlSession.delete(NS+"scheduleMultiDelete", calid);				
+						
 		return sqlSession.delete(NS+"calDelete",calid);		
+	}	
+	
+	@Override
+	public int scheduleMultiDelete(String calid) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NS+"scheduleMultiDelete", calid);		
 	}
+
 
 	@Override
 	public List<ToastCalDTO> calAllSelect(Map<String,String> map) {
@@ -49,4 +56,5 @@ public class ToastCalDao implements IToastCalDao{
 		return sqlSession.selectOne(NS+"calCnt",userid);
 	}
 
+	
 }

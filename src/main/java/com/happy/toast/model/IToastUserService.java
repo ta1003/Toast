@@ -11,4 +11,10 @@ public interface IToastUserService {
 	public int 				  userInsert(ToastUserDTO dto);
 	
 	public ToastUserDTO 	  userSelectOne(Map<String,String> map);
+	// id 중복체크
+	public String 			  userIdChk(String userid);
+	// 닉네임 중복체크
+	public String 			  userNicknameChk(String userNickname);
+	// 이메일 중복체크
+	public String 			  userEmailChk(String userEmail);
 }

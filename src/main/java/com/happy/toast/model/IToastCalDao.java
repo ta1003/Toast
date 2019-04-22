@@ -8,6 +8,7 @@ import com.happy.toast.dtos.ToastCalDTO;
 public interface IToastCalDao {
 	public int calInsert(ToastCalDTO dto);
 	public int calDelete(String calid);
+	public int scheduleMultiDelete(String calid);
 	public List<ToastCalDTO> calAllSelect(Map<String,String> map);
 	public ToastCalDTO calSelect();
 	public int calCnt(String userid);
