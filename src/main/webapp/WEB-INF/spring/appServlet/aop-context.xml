@@ -6,17 +6,34 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-
-
 		
-	<!-- 20^^번 -->
-	<!-- 로그 정보 전, 반환후, 예외 -->
+		
+	<!-- AOP : CCC관점외 관심사 -->
+	<!-- 개발을 하기 위해서  중요하게 작성하지 않는 부분에 대해서
+		 자동으로 처리하자 -->
+	<!-- LOG, 예외 , TRANSACTION  -->
+	
+	<!-- 실직적으로 실행되는 메소드 -->
+	<bean id="logAop" class="com.happy.toast.aop.AopDaoLogger"/>	
+	
+	<!-- aspect  , pointCut-->
 	<aop:config>
-		<aop:pointcut  id="servicelogPoint" 
+		<aop:pointcut  id="daologPoint" 
 		expression="execution(public * com.happy.toast.model.*Dao*.*(..))"/>
+		<!-- 실행되는 Class의 Bean을 등록 -->
+		<aop:aspect id="logAop" ref="logAop">
+			<!-- DAO 실행 전에 -->
+			<aop:before method="before" pointcut-ref="daologPoint"/>
+			<!-- DAO 성공적으로 실행하고 반환이 이루어 질때 -->
+			<aop:after-returning method="afterReturning" pointcut-ref="daologPoint"/>
+			<!-- DAO 실행 하고 에러 발생시 -->
+			<aop:after-throwing method="afterThrowing" pointcut-ref="daologPoint"/>
+		</aop:aspect>
 	</aop:config>
 	
-	<!-- 22^^번 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	
+	 <!-- 22^^번 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
 
 </beans>

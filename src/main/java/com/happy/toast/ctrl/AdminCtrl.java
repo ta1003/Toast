@@ -85,5 +85,19 @@ public class AdminCtrl {
 		return json.toString();
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/userBlock.do", method=RequestMethod.GET)
+	public String userBlock(String userid) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid_", userid);
+		boolean isc = iUserService.userBlock(map);
+		System.out.println(isc+"$$$$$$$$$$$$$$$$$$$$$$$$");
+		logger.info("Controller userBlock {}", isc);
+		
+		
+		return "adminPage";
+	}
+	
 	
 }

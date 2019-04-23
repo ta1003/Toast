@@ -4,5 +4,7 @@
 /IToastUserService.class
 /ToastCalDao.class
 /ToastCalService.class
+/ToastScheduleDao.class
 /ToastUserDao.class
 /ToastUserService.class
+/ToastVisitDao.class
