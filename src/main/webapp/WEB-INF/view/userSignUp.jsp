@@ -19,11 +19,13 @@
 				if(userid.length < 5){
 					var infoUserid = document.getElementById("infoUserid");
 					infoUserid.innerHTML = "5글자 이상 입력해주세요.";
-					$("#infoUserid").css({"color":"red"});			
+					$("#infoUserid").css({"color":"red"});	
+					document.getElementsByName("userid")[0].title="false";
 				}else if(userid.length >= 10){
 					var infoUserid = document.getElementById("infoUserid");
 					infoUserid.innerHTML = "길이가 너무 깁니다.";
 					$("#infoUserid").css({"color":"red"});	
+					document.getElementsByName("userid")[0].title="false";
 				}else{	
 					
 					$.ajax({
@@ -42,6 +44,7 @@
 								var infoUserid = document.getElementById("infoUserid");
 								infoUserid.innerHTML = "사용할 수 없습니다.";
 								$("#infoUserid").css({"color":"red"});
+								document.getElementsByName("userid")[0].title="false";
 							}							
 						},
 						error : function() {
@@ -57,11 +60,13 @@
 				if(userid.length < 5){
 					var infoUserid = document.getElementById("infoPassword");
 					infoUserid.innerHTML = "길이가 너무 짧습니다.";
-					$("#infoPassword").css({"color":"red"});			
+					$("#infoPassword").css({"color":"red"});
+					document.getElementsByName("userpassword")[0].title="false";
 				}else if(userid.length >= 16){
 					var infoUserid = document.getElementById("infoPassword");
 					infoUserid.innerHTML = "길이가 너무 깁니다.";
 					$("#infoPassword").css({"color":"red"});	
+					document.getElementsByName("userpassword")[0].title="false";
 				}else{
 					var infoUserid = document.getElementById("infoPassword");
 					infoUserid.innerHTML = "사용가능합니다.";
@@ -77,10 +82,12 @@
 					var infonickname = document.getElementById("infonickname");
 					infonickname.innerHTML = "5글자 이상 입력해주세요.";
 					$("#infonickname").css({"color":"red"});			
+					document.getElementsByName("usernickname")[0].title="false";
 				}else if(usernickname.length >= 10){
 					var infonickname = document.getElementById("infonickname");
 					infonickname.innerHTML = "길이가 너무 깁니다.";
 					$("#infonickname").css({"color":"red"});	
+					document.getElementsByName("usernickname")[0].title="false";
 				}else{	
 					
 					$.ajax({
@@ -99,6 +106,7 @@
 								var infonickname = document.getElementById("infonickname");
 								infonickname.innerHTML = "사용할 수 없습니다.";
 								$("#infonickname").css({"color":"red"});
+								document.getElementsByName("usernickname")[0].title="false";
 							}							
 						},
 						error : function() {
@@ -116,17 +124,20 @@
 				if(useremail.length < 5){
 					var infoemail = document.getElementById("infoemail");
 					infoemail.innerHTML = "길이가 너무 짧습니다.";
-					$("#infoemail").css({"color":"red"});			
+					$("#infoemail").css({"color":"red"});		
+					document.getElementsByName("useremail")[0].title="false";
 				}else if(useremail.length >= 30){
 					var infoemail = document.getElementById("infoemail");
 					infoemail.innerHTML = "길이가 너무 깁니다.";
 					$("#infoemail").css({"color":"red"});	
+					document.getElementsByName("useremail")[0].title="false";
 				}else{					
 					var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 					if(!exptext.test(useremail)){
 						var infoemail = document.getElementById("infoemail");
 						infoemail.innerHTML = "이메일 형식에 맞지 않습니다.";
 						$("#infoemail").css({"color":"red"});	
+						document.getElementsByName("useremail")[0].title="false";
 					}else{
 						$.ajax({
 							url : "userEmailChk.do",
@@ -144,6 +155,7 @@
 									var infoemail = document.getElementById("infoemail");
 									infoemail.innerHTML = "사용할 수 없습니다.";
 									$("#infoemail").css({"color":"red"});
+									document.getElementsByName("useremail")[0].title="false";
 								}							
 							},
 							error : function() {

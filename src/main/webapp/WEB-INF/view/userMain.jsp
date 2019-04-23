@@ -182,7 +182,7 @@ p{
 </script>
 <body>
 	<div id="layout">					
-		<%@ include file="/WEB-INF/view/Header.jsp"%>
+		<%@ include file="/WEB-INF/view/Header.jsp"%>		
 		<div id="toast">			
 			
 				<%
@@ -344,7 +344,7 @@ p{
 
 			</div>
 			</div>
-			<input type="hidden" id="calDetailid">
+			<input type="hidden" id="calDetailid">			
 		<%@ include file="/WEB-INF/view/Footer.jsp"%>
 	</div>
 </body>

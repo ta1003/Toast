@@ -106,6 +106,7 @@ public class MainCtrl {
 
 			//페이징 처리를 위한 pageDto 생성			
 			int cnt = iCalService.calCnt(uDto.getUserid());
+			if(cnt == 0) cnt=1;
 			ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 9);				
 			session.setAttribute("pDto", pDto);			
 			

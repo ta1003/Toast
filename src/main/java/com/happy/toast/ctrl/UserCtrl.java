@@ -156,14 +156,15 @@ public class UserCtrl {
 	@RequestMapping(value="/calListCtrl.do" , method = RequestMethod.GET)
 	public String render(HttpSession session,Model model,String pageNo){
 		
-		if(pageNo == null || pageNo == "")
+		if(pageNo == null || pageNo == "" || pageNo == "0")
 			pageNo = "1";		
 		
 		ToastUserDTO uDto = (ToastUserDTO)session.getAttribute("uDto");
 		// pagingDTO 생성
 		int cnt = iCalService.calCnt(uDto.getUserid());
+		if(cnt == 0) cnt=1;
 		ToastPagingDTO pDto = new ToastPagingDTO(5, Integer.parseInt(pageNo),cnt, 9);				
-		session.setAttribute("pDto", pDto);		
+		session.setAttribute("pDto", pDto);				
 		
 		// 페이징 처리
 		Map<String,String> pagingMap = new HashMap<String,String>();	
