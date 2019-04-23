@@ -13,8 +13,12 @@
 	</insert>	
 	
 	<select id="userSelectOne" resultType="UDto" parameterType="java.util.Map">
-		SELECT USERID,PASSWORD,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
-				FROM TOASTUSER WHERE USERID=#{userid} AND PASSWORD=#{password}
+		SELECT USERID,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
+				FROM TOASTUSER WHERE USERID=#{userid}
+	</select>
+	
+	<select id="userPasswordChk" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT PASSWORD FROM TOASTUSER WHERE USERID=#{userid}
 	</select>
 	<!-- 아이디 중복 체크를 위한 쿼리문 -->
 	<select id="userIdChk" resultType="java.lang.String" parameterType="java.lang.String">

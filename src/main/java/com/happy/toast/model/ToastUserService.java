@@ -50,4 +50,10 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userEmailChk(userEmail);
 	}
 
+	@Override
+	public boolean userPasswordChk(Map<String,String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userPasswordChk(map);
+	}
+
 }

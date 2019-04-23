@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.happy.toast.dtos.ToastUserDTO;
@@ -15,6 +16,9 @@ public class ToastUserDao implements IToastUserDao{
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	private static String NS="com.happy.toast.user.";
 	
@@ -26,13 +30,15 @@ public class ToastUserDao implements IToastUserDao{
 
 	@Override
 	public int userInsert(ToastUserDTO dto) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+		String passwordEncode = passwordEncoder.encode(dto.getPassword());
+		dto.setPassword(passwordEncode);		
 		return sqlSession.insert(NS+"userInsert", dto);
 	}
 
 	@Override
 	public ToastUserDTO userSelectOne(Map<String, String> map) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		return sqlSession.selectOne(NS+"userSelectOne", map);
 	}
 
@@ -52,6 +58,13 @@ public class ToastUserDao implements IToastUserDao{
 	public String userEmailChk(String userEmail) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"userEmailChk", userEmail);
+	}
+
+	@Override
+	public boolean userPasswordChk(Map<String,String> map) {
+		String password = sqlSession.selectOne(NS+"userPasswordChk", map.get("userid"));
+		boolean result = passwordEncoder.matches(map.get("password"), password);
+		return result;
 	}
 
 }

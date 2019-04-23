@@ -52,9 +52,7 @@ public class MainCtrl {
 		// 회원정보 세션에 담음
 		Map<String,String> map = new HashMap<String,String>();			
 		String userid = request.getParameter("userid");
-		String password = request.getParameter("password");
 		map.put("userid", userid);
-		map.put("password", password);
 		ToastUserDTO uDto = iUserService.userSelectOne(map);
 		session.setAttribute("uDto", uDto);
 		
@@ -139,12 +137,20 @@ public class MainCtrl {
 		String password = request.getParameter("password");
 		map.put("userid", userid);
 		map.put("password", password);
-		ToastUserDTO dto = iUserService.userSelectOne(map);
-		
-		Map<String,String> resultmap = new HashMap<String,String>();	
-		if(dto != null) {resultmap.put("result", "true");}
-		else			{resultmap.put("result", "false");}
-		return resultmap;
+		boolean passwordChk = iUserService.userPasswordChk(map);
+		if(!passwordChk) {
+			Map<String,String> resultmap = new HashMap<String,String>();
+			resultmap.put("result", "false");
+			return resultmap;
+		}
+		else {
+			ToastUserDTO dto = iUserService.userSelectOne(map);
+			
+			Map<String,String> resultmap = new HashMap<String,String>();	
+			if(dto != null) {resultmap.put("result", "true");}
+			else			{resultmap.put("result", "false");}
+			return resultmap;
+		}
 	}
 	
 	@RequestMapping(value= "/signUp.do" , method = RequestMethod.GET)

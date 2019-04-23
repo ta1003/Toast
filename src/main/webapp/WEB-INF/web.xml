@@ -17,6 +17,7 @@ version="3.1">
 		<param-value>
 		/WEB-INF/spring/appServlet/applicationContext.xml
 		/WEB-INF/spring/appServlet/visit-context.xml
+		/WEB-INF/spring/appServlet/security-context.xml
 		</param-value>
 	</context-param>
 
