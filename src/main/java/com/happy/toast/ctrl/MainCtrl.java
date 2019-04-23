@@ -158,4 +158,23 @@ public class MainCtrl {
 		return "userSignUp";
 	}
 	
+	
+	@RequestMapping(value="/logOut.do", method=RequestMethod.GET)
+	public String logOut(HttpSession session) {
+		
+		ToastUserDTO dto = (ToastUserDTO)session.getAttribute("uDto");
+		System.out.println(dto);
+		if(dto != null) {
+			session.removeAttribute("uDto");
+			session.removeAttribute("pDto");
+			
+			session.invalidate();
+		
+		}
+		logger.info("------session 종료--------");
+		return "redirect:/userLogin.jsp";
+	}
+	
+	
+	
 }

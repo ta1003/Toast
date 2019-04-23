@@ -19,4 +19,6 @@ public interface IToastUserService {
 	public String 			  userEmailChk(String userEmail);
 	// 암호화된 비밀번호 체크
 	public boolean			  userPasswordChk(Map<String,String> map);
+	
+	public boolean 			  userBlock(Map<String, String> map);
 }

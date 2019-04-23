@@ -67,4 +67,11 @@ public class ToastUserDao implements IToastUserDao{
 		return result;
 	}
 
+	@Override
+	public boolean userBlock(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		int n = sqlSession.update(NS+"userBlock", map);
+		return n>0?true:false;
+	}
+
 }

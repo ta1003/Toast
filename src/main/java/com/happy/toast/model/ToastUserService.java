@@ -56,4 +56,16 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userPasswordChk(map);
 	}
 
+	@Override
+	public boolean userBlock(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userBlock(map);
+	}
+
+
+	
+
+
+	
+	
 }

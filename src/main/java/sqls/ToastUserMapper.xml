@@ -34,5 +34,11 @@
 	<select id="userEmailChk" resultType="java.lang.String" parameterType="java.lang.String">
 		SELECT EMAIL FROM TOASTUSER WHERE EMAIL=#{email}
 	</select>
+	
+	<!-- 회원 접근 권한을 수정하기 위한 쿼리문 -->
+	<update id="userBlock" parameterType="java.util.Map">
+	 UPDATE TOASTUSER SET DELFLAG =#{delflag} WHERE USERID=#{userid}
+	</update>
+	
 		
 </mapper>

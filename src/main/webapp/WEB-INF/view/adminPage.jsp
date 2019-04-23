@@ -13,6 +13,9 @@
 <script type="text/javascript">
 function adminShow() {
 // 	alert("아작스 작동");
+
+//	alert(userblock); 
+
 	ajaxAdminShow();
 }
 
@@ -46,7 +49,7 @@ var ajaxAdminShow = function (){
 									 "</tr>";
 												
 				$.each(value,function(key,user){	
-					alert(user.delflag);
+					//alert(user.delflag);
 					//alert(user);
 					htmlTable += "<tr>"+
 									"<td>"+user.userid+"</td>"+
@@ -56,8 +59,13 @@ var ajaxAdminShow = function (){
 									"<td>"+user.email+"</td>"+
 									"<td>"+user.auth+"</td>"+
 									"<td>"+user.regdate+"</td>"+
-									"<td>"+user.delflag+"</td>"+
-									"<td><button onclick='modify()'>modify</button></td>"+
+									"<td>"+
+										"<select id='ublock'>"+
+											"<option value='T'>T</option>"+
+											"<option value='F'>F</option>"+
+										"</select>"+
+									"</td>"+
+									"<td><button onclick='modify(\""+user.userid+"\")'>modify</button></td>"+
 								"</tr>";
 				});	
 						
@@ -74,25 +82,27 @@ var ajaxAdminShow = function (){
 }
 
 
-function modify(){
-//	alert("수정");
-	ajaxModify();
+function modify(userid){
+//	alert(userid);
+	ajaxModify(userid);
 }
 
-var ajaxModify = function () {
+var ajaxModify = function (userid) {
 	alert("수정 아작스");
+	
 	$.ajax({
-		url : "usermodify.do",
-		type : "post",
+		url : "userBlock.do",
+		type : "get",
 		asyn : false,
-		data : {"userid":userid},
-		success : function(){
+		data : { 'userid': userid },
+		success : function(isc){
 			
+			alert("userBlock 변경");
 		}, error : function() {
 			alert("수정 실패");
 		}
 	});
-}
+ }
 
 
 
@@ -108,7 +118,7 @@ var ajaxModify = function () {
 	<br>
 	<a href="./homepageState.do">Check Connected Users</a>
 	<br>
-	<a href="./logout.do">Log Out</a>
+	<a href="./logOut.do">Log Out</a>
 	
 	
 
