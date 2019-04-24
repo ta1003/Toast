@@ -75,6 +75,36 @@ public class UserCtrl {
 		return map;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/userNicknameUpdateChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userNicknameUpdateChk(@RequestParam(value="usernickname") String userNickname , @RequestParam(value="userid") String userid){
+		Map<String, String> updateMap = new HashMap<String,String>();
+		updateMap.put("nickname", userNickname);
+		updateMap.put("userid", userid);
+		String id = iUserService.userNicknameUpdateChk(updateMap);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/userEmailUpdateChk.do", method=RequestMethod.POST)
+	public Map<String,Boolean> userEmailUpdateChk(@RequestParam(value="useremail") String useremail , @RequestParam(value="userid") String userid){
+		Map<String, String> updateMap = new HashMap<String,String>();
+		updateMap.put("email", useremail);
+		updateMap.put("userid", userid);
+		String id = iUserService.userEmailUpdateChk(updateMap);
+		boolean result = false;
+		if(id==null || id=="") { result = true; }
+		
+		Map<String,Boolean> map = new HashMap<String,Boolean>();		
+		map.put("result", result);
+		return map;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/calDelete.do" , method = RequestMethod.POST)	
@@ -177,6 +207,43 @@ public class UserCtrl {
 		System.out.println("페이지에 몇개 뿌려주나 :"+lists.size());
 		
 		return "userMain";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/userUpdate.do" , method = RequestMethod.POST)
+	public Map<String,Boolean> userupdate(HttpServletRequest req , HttpSession session) {
+		
+		String userid = req.getParameter("userid");
+		String password = req.getParameter("password");
+		String nickname = req.getParameter("nickname");
+		String address = req.getParameter("address");
+		String phone = req.getParameter("phone");
+		String email = req.getParameter("email");
+		
+		ToastUserDTO dto = new ToastUserDTO(userid, password, nickname, email, "U", "123");
+		dto.setAddress(address);
+		dto.setPhone(phone);
+		int isc = iUserService.userUpdate(dto);
+		
+		Map<String,Boolean> result = new HashMap<String , Boolean>();		
+		if(isc >= 1) { 
+			result.put("result",true);
+			// 회원정보 세션에 담음
+			Map<String,String> map = new HashMap<String,String>();			
+			userid = req.getParameter("userid");
+			map.put("userid", userid);
+			ToastUserDTO uDto = iUserService.userSelectOne(map);
+			session.setAttribute("uDto", uDto);
+		}
+		else result.put("result",false);
+		return result;
+	}
+	
+	
+	@RequestMapping(value="/userDetail.do" , method = RequestMethod.GET)
+	public String userdetail() {
+		return "userDetail";
 	}
 	
 	@RequestMapping(value="/userInsert.do" , method = RequestMethod.POST)
@@ -327,5 +394,5 @@ public class UserCtrl {
 				Map<String,String> mapl = new HashMap<String,String>();
 				mapl.put("id", id);				
 				return mapl;
-	}
+	}	
 }

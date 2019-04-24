@@ -74,4 +74,23 @@ public class ToastUserDao implements IToastUserDao{
 		return n>0?true:false;
 	}
 
+	@Override
+	public String userNicknameUpdateChk(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userNicknameUpdateChk", map);
+	}
+
+	@Override
+	public String userEmailUpdateChk(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userEmailUpdateChk", map);
+	}
+
+	@Override
+	public int userUpdate(ToastUserDTO dto) {
+		String passwordEncode = passwordEncoder.encode(dto.getPassword());
+		dto.setPassword(passwordEncode);
+		return sqlSession.update(NS+"userUpdate", dto);
+	}
+
 }

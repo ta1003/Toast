@@ -224,6 +224,8 @@ p{
 				%>					
 		</div>			
 			
+			<a href="./userDetail.do">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="./logOut.do">로그아웃</a>
 			<div style="text-align: center;">
 				<a href="./calListCtrl.do?pageNo=<%=pDto.getFirstPageNo()%>">◁</a>
 				<a href="./calListCtrl.do?pageNo=<%=pDto.getPrevPageNo()%>">◀</a>

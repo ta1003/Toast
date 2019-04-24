@@ -86,13 +86,13 @@ public class ToastPagingDTO {
 	public int getStartPageNo() {
 		return startPageNo;
 	}
-	public void setStartPageNo(int startPageNo) {
+	public void setStartPageNo(int startPageNo) {		
 		this.startPageNo = startPageNo;
 	}
 	public int getEndPageNo() {
 		return endPageNo;
 	}
-	public void setEndPageNo(int endPageNo) {
+	public void setEndPageNo(int endPageNo) {		
 		this.endPageNo = endPageNo;
 	}
 	public int getFirstBoardNo() {
@@ -144,8 +144,7 @@ public class ToastPagingDTO {
 		// endPage가 마지막 페이지를 넘을수 없도록
 		if(endPage > finalPage) {
 			endPage = finalPage;
-		}
-		
+		}		
 		// 현재 페이지가 첫번째페이지라면 
 		if(isPageNowFirst) {
 			setPrevPageNo(1);
@@ -167,4 +166,15 @@ public class ToastPagingDTO {
 		
 		setLastPageNo(finalPage);
 	}
+
+	@Override
+	public String toString() {
+		return "ToastPagingDTO [pageListSize=" + pageListSize + ", nowPageNo=" + nowPageNo + ", totalBoardSize="
+				+ totalBoardSize + ", pageBoardSize=" + pageBoardSize + ", firstPageNo=" + firstPageNo + ", lastPageNo="
+				+ lastPageNo + ", prevPageNo=" + prevPageNo + ", nextPageNo=" + nextPageNo + ", startPageNo="
+				+ startPageNo + ", endPageNo=" + endPageNo + ", firstBoardNo=" + firstBoardNo + ", endBoardNo="
+				+ endBoardNo + "]";
+	}
+	
+	
 }
