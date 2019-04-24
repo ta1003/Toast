@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="com.happy.toast.dtos.ToastVisitDTO"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,6 +9,20 @@
 <meta charset="UTF-8">
 <title>홈페이지 접속 현황</title>
 </head>
+<%
+	String chrome = (String)request.getAttribute("Chrome");
+	String ie = (String)request.getAttribute("IE");
+	String safiri = (String)request.getAttribute("Safiri");
+	String opera = (String)request.getAttribute("Opera");
+	String firefox = (String)request.getAttribute("Firefox");
+	String etc = (String)request.getAttribute("Etc");
+	
+	List<ToastVisitDTO> vlists = (List<ToastVisitDTO>)request.getAttribute("vlists");
+	
+	String[]  weeklyCnt = (String[])request.getAttribute("weeklyCnt");
+%>
+
+
 <body>
 <!-- CSS -->
 
@@ -36,8 +53,6 @@
 	</div>
 
 
-
-
 <script type="text/javascript">
 		
 
@@ -48,27 +63,27 @@
 	    series: [ // 데이터 입력
 	        {
 	            name: 'Chrome', // 원형 차트의 각 세부 조각
-	            data: 20 // 각 세부 조각마다 입력되는 데이터
+	            data: <%=chrome%> // 각 세부 조각마다 입력되는 데이터
 	        },
 	        {
 	            name: 'IE',
-	            data: 17
+	            data: <%=ie%>
 	        },
 	        {
 	            name: 'Firefox',
-	            data:  12
+	            data:  <%=firefox%>
 	        },
 	        {
 	            name: 'Safari',
-	            data: 7
+	            data: <%=safiri%>
 	        },
 	        {
 	            name: 'Opera',
-	            data: 3
+	            data:  <%=opera%>
 	        },
 	        {
 	            name: 'Etc',
-	            data: 2
+	            data: <%=etc%>
 	        }
 	    ]
 	};
@@ -120,7 +135,9 @@
 		categories: 
 			
 			[	// x축에 입력되는 항목들			
-				'June, 2015', 'July, 2015', 'August, 2015', 'September, 2015', 'October, 2015', 'November, 2015', 'December, 2015'
+				<c:forEach var="dto" items="${vlists}" begin="0" end="6">
+				'${dto.vdate}',
+				</c:forEach>
 			],
 		
 	    series: [
@@ -134,7 +151,10 @@
 	        },
 	        {
 	            name: '결과보기',
-	            data: [10, 5, 8, 10, 3, 7, 4]
+	            data: [<c:forEach var="wCnt" items="${weeklyCnt}">
+    					'${wCnt}',
+    					</c:forEach>
+    				  ]
 	        }
 	     ]
 	};
@@ -148,7 +168,7 @@
 	    yAxis: {
 	        title: 'Amount', // y축 제목
 	        min: 0, 		// 최소 값
-	        max: 15			// 최대 값
+	        max: 50			// 최대 값
 	    },
 	    xAxis: {
 	        title: 'Month' // x축 타이틀

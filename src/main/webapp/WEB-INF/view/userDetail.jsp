@@ -1,6 +1,12 @@
+<%@page import="com.happy.toast.dtos.ToastPagingDTO"%>
+<%@page import="com.happy.toast.dtos.ToastUserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%
+	ToastUserDTO uDto = (ToastUserDTO)session.getAttribute("uDto");
+	ToastPagingDTO pDto = (ToastPagingDTO)session.getAttribute("pDto");
+%>
      
     
 <!DOCTYPE html>
@@ -13,48 +19,7 @@
 <script type="text/javascript">  
 	$(document).ready(function() {
 		
-		// 아이디 중복체크 
-		 $("input[name='userid']").on("propertychange change keyup paste input",function(){			 
-				var userid = document.getElementsByName("userid")[0].value;
-				if(userid.length < 5){
-					var infoUserid = document.getElementById("infoUserid");
-					infoUserid.innerHTML = "5글자 이상 입력해주세요.";
-					$("#infoUserid").css({"color":"red"});	
-					document.getElementsByName("userid")[0].title="false";
-				}else if(userid.length >= 10){
-					var infoUserid = document.getElementById("infoUserid");
-					infoUserid.innerHTML = "길이가 너무 깁니다.";
-					$("#infoUserid").css({"color":"red"});	
-					document.getElementsByName("userid")[0].title="false";
-				}else{	
-					
-					$.ajax({
-						url : "userIdChk.do",
-						type : "post",
-						asyn : false,
-						data : { "userid" : userid },
-						dataType : "json",
-						success : function(msg) {
-							if(msg.result){
-								var infoUserid = document.getElementById("infoUserid");
-								infoUserid.innerHTML = "사용가능합니다.";
-								$("#infoUserid").css({"color":"green"});
-								document.getElementsByName("userid")[0].title="true";
-							}else{
-								var infoUserid = document.getElementById("infoUserid");
-								infoUserid.innerHTML = "사용할 수 없습니다.";
-								$("#infoUserid").css({"color":"red"});
-								document.getElementsByName("userid")[0].title="false";
-							}							
-						},
-						error : function() {
-							alert("실패");
-						}
-					});						
-				}
-		 });
-		
-		 // 비밀번호 길이
+		// 비밀번호 길이
 		 $("input[name='userpassword']").on("propertychange change keyup paste input",function(){			 
 				var userid = document.getElementsByName("userpassword")[0].value;
 				if(userid.length < 5){
@@ -91,10 +56,10 @@
 				}else{	
 					
 					$.ajax({
-						url : "userNicknameChk.do",
+						url : "userNicknameUpdateChk.do",
 						type : "post",
 						asyn : false,
-						data : { "usernickname" : usernickname },
+						data : { "usernickname" : usernickname , "userid" : '<%=uDto.getUserid()%>' },
 						dataType : "json",
 						success : function(msg) {
 							if(msg.result){
@@ -140,10 +105,10 @@
 						document.getElementsByName("useremail")[0].title="false";
 					}else{
 						$.ajax({
-							url : "userEmailChk.do",
+							url : "userEmailUpdateChk.do",
 							type : "post",
 							asyn : false,
-							data : { "useremail" : useremail },
+							data : { "useremail" : useremail , "userid" : '<%=uDto.getUserid()%>' },
 							dataType : "json",
 							success : function(msg) {
 								if(msg.result){
@@ -166,21 +131,64 @@
 				}
 		 });
 		
+		
+		$("#updateFormBtn").click(function() {
+			$("#updateBtn").removeAttr('disabled');
+			$("#reset").removeAttr('disabled');
+			$("#updateFormBtn").attr('disabled','disabled');
+			$("input.inputVal").each(function(index) {
+				$(this).removeAttr('readonly');
+			});
+		});
+			
+		
+		
 	})			
 	
 	function cancel() {
-		location.href="./userLogin.jsp";
+		location.href="./calListCtrl.do?pageNo=<%=pDto.getNowPageNo()%>";
 	}
-	function userInsert(){
-		var userid = document.getElementsByName("userid")[0];
+	function userUpdate(){		
 		var userpassword = document.getElementsByName("userpassword")[0];
 		var usernickname = document.getElementsByName("usernickname")[0];
 		var useremail = document.getElementsByName("useremail")[0];
 		
-		if(userid.title == "true" && userpassword.title == "true" && usernickname.title == "true"
+		if(userpassword.title == "true" && usernickname.title == "true"
 				 &&	useremail.title == "true"){
-			alert("회원가입");
-			document.forms[0].submit();
+			alert("개인정보 수정 시작");
+			
+			var userid = document.getElementsByName("userid")[0];
+			var address = document.getElementsByName("useraddress")[0];
+			var phone = document.getElementsByName("userphone")[0];
+			// 여기에 ajax 넣어야 함
+					$.ajax({
+							url : "userUpdate.do",
+							type : "post",
+							asyn : false,
+							data : { "email" : useremail.value , "userid" : userid.value ,
+									 "nickname" : usernickname.value , "address" : address.value,
+									 "password" : userpassword.value , "phone" : phone.value,
+									},
+							dataType : "json",
+							success : function(msg) {
+								alert(msg);
+								if(msg.result){
+									alert("수정성공");
+									$("#updateBtn").attr('disabled','disabled');
+									$("#reset").attr('disabled','disabled');
+									$("#updateFormBtn").removeAttr('disabled','disabled');
+									//document.forms[0].submit();
+									$("input.inputVal").each(function(index) {
+										$(this).attr('readonly','readonly');
+									});
+								}else{
+									alert("수정실패");
+								}							
+							},
+							error : function() {
+								alert("실패");
+							}
+						});			
 		} else{
 			alert("필수 입력란을 다 채워주세요.");			
 		}
@@ -190,7 +198,7 @@
 
 <body>
 	<div>
-		<form action="./userInsert.do" id="userinsertFrm" method="post" onsubmit="return false;">
+		<form action="#" id="userupdateFrm" method="post" onsubmit="return false;">
 			<table>
 				<thead>
 					<tr>
@@ -202,35 +210,35 @@
 					<tr>
 						<td>ID</td>
 						<td>
-							<input type="text" name="userid" placeholder="아이디를 입력해주세요." title="false">
+							<input type="text"  name="userid" value='${uDto.userid}' readonly="readonly">
 							<span id="infoUserid" style="color:gray; font-size: 8px;">*필수 입력란입니다.</span>
 						</td>
 					</tr>
 					<tr>
 						<td>PassWord</td>
 						<td>
-							<input type="password" name="userpassword" placeholder="비밀번호를 입력해주세요." title="false">
+							<input type="password"  class="inputVal" name="userpassword" title="false" readonly="readonly">
 							<span id="infoPassword" style="color:gray; font-size: 8px;">*필수 입력란입니다.</span>
 						</td>
 					</tr>						
 					<tr>
 						<td>NickName</td>
 						<td>
-							<input type="text" name="usernickname" placeholder="닉네임을 입력해주세요." title="false">
+							<input type="text"  class="inputVal" name="usernickname" value='${uDto.nickname}' title="true" readonly="readonly">
 							<span id="infonickname" style="color:gray; font-size: 8px;">*필수 입력란입니다.</span>
 						</td>
 					</tr>	
 					<tr>
 						<td>Address</td>
-						<td><input type="text" name="useraddress" placeholder="주소를 입력해주세요."></td>
+						<td><input type="text"  class="inputVal" name="useraddress" value='${uDto.address}' readonly="readonly"></td>
 					</tr>	
 					<tr>
 						<td>Phone</td>
-						<td><input type="text" name="userphone" placeholder="전화번호를 입력해주세요."></td>
+						<td><input type="text"  class="inputVal" name="userphone" value='${uDto.phone}' readonly="readonly"></td>
 					</tr>	
 					<tr>
 						<td>E-mail</td>
-						<td><input type="text" name="useremail" placeholder="이메일을 입력해주세요." title="false">
+						<td><input type="text"  class="inputVal" name="useremail" value='${uDto.email}' title="true" readonly="readonly">
 						<span id="infoemail" style="color:gray; font-size: 8px;">*필수 입력란입니다.</span>
 						</td>
 					</tr>	
@@ -242,8 +250,9 @@
 				<tfoot>
 					<tr>
 						<td>
-							<input type="button" value="회원가입" onclick="userInsert()">
-							<input type="reset" value="초기화">
+							<input type="button" id="updateFormBtn" value="수정">
+							<input type="button" id="updateBtn" value="수정완료" onclick="userUpdate()" disabled="disabled">
+							<input type="reset" id="reset" value="초기화" disabled="disabled">
 							<input type="button" value="이전으로" onclick="cancel()">
 						</td>
 					</tr>

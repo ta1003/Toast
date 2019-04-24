@@ -12,6 +12,10 @@
 			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE,'F')			
 	</insert>	
 	
+	<update id="userUpdate" parameterType="UDto">
+		UPDATE TOASTUSER SET PASSWORD=#{password} , NICKNAME=#{nickname} , ADDRESS=#{address} , PHONE=#{phone}, EMAIL=#{email} WHERE USERID=#{userid}
+	</update>	
+	
 	<select id="userSelectOne" resultType="UDto" parameterType="java.util.Map">
 		SELECT USERID,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
 				FROM TOASTUSER WHERE USERID=#{userid}
@@ -34,5 +38,20 @@
 	<select id="userEmailChk" resultType="java.lang.String" parameterType="java.lang.String">
 		SELECT EMAIL FROM TOASTUSER WHERE EMAIL=#{email}
 	</select>
+	
+	<!-- 회원 접근 권한을 수정하기 위한 쿼리문 -->
+	<update id="userBlock" parameterType="java.util.Map">
+	 UPDATE TOASTUSER SET DELFLAG =#{delflag} WHERE USERID=#{userid}
+	</update>
+	
+	<!-- 상세정보 수정시 닉네임 중복 체크를 위한 쿼리문 -->
+	<select id="userNicknameUpdateChk" resultType="java.lang.String" parameterType="java.util.Map">
+		SELECT NICKNAME FROM TOASTUSER WHERE NICKNAME=#{nickname} AND NOT USERID=#{userid}
+	</select>
+	
+	<!-- 상세정보 수정시 이메일 중복 체크를 위한 쿼리문 -->
+	<select id="userEmailUpdateChk" resultType="java.lang.String" parameterType="java.util.Map">
+		SELECT EMAIL FROM TOASTUSER WHERE EMAIL=#{email} AND NOT USERID=#{userid}
+	</select>	
 		
 </mapper>

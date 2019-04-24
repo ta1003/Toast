@@ -20,5 +20,12 @@ public interface IToastUserDao {
 	// 암호화된 비밀번호 체크
 	public boolean			  userPasswordChk(Map<String,String> map);
 
-	public boolean   			  userBlock(Map<String, String> map);
+	public boolean   		  userBlock(Map<String, String> map);
+	
+	// 정보 수정시 닉네임 중복체크
+	public String 			  userNicknameUpdateChk(Map<String,String> map);
+	// 정보 수정시 이메일 중복체크
+	public String 			  userEmailUpdateChk(Map<String,String> map);
+	
+	public int 				  userUpdate(ToastUserDTO dto);
 }

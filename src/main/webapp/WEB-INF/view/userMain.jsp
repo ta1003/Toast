@@ -182,7 +182,7 @@ p{
 </script>
 <body>
 	<div id="layout">					
-		<%@ include file="/WEB-INF/view/Header.jsp"%>
+		<%@ include file="/WEB-INF/view/Header.jsp"%>		
 		<div id="toast">			
 			
 				<%
@@ -224,6 +224,8 @@ p{
 				%>					
 		</div>			
 			
+			<a href="./userDetail.do">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="./logOut.do">로그아웃</a>
 			<div style="text-align: center;">
 				<a href="./calListCtrl.do?pageNo=<%=pDto.getFirstPageNo()%>">◁</a>
 				<a href="./calListCtrl.do?pageNo=<%=pDto.getPrevPageNo()%>">◀</a>
@@ -344,7 +346,7 @@ p{
 
 			</div>
 			</div>
-			<input type="hidden" id="calDetailid">
+			<input type="hidden" id="calDetailid">			
 		<%@ include file="/WEB-INF/view/Footer.jsp"%>
 	</div>
 </body>

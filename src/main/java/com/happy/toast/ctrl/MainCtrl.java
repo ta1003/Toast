@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class MainCtrl {
 	private IToastUserService iUserService;
 	
 	@Autowired
-	private SqlSession sqlsession;
+	private SqlSessionTemplate sqlsession;
 	
 	@Autowired
 	private ToastVisitDao vdao;		
@@ -106,6 +107,7 @@ public class MainCtrl {
 
 			//페이징 처리를 위한 pageDto 생성			
 			int cnt = iCalService.calCnt(uDto.getUserid());
+			if(cnt == 0) cnt=1;
 			ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 9);				
 			session.setAttribute("pDto", pDto);			
 			

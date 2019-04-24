@@ -62,6 +62,24 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userBlock(map);
 	}
 
+	@Override
+	public String userNicknameUpdateChk(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userNicknameUpdateChk(map);
+	}
+
+	@Override
+	public String userEmailUpdateChk(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userEmailUpdateChk(map);
+	}
+
+	@Override
+	public int userUpdate(ToastUserDTO dto) {
+		// TODO Auto-generated method stub
+		return iUserDao.userUpdate(dto);
+	}
+
 
 	
 

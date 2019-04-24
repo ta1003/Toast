@@ -20,7 +20,7 @@ public class ToastVisitDao {
 	private final String  NS= "com.happy.toast.visit.";
 		
 	
-	public boolean insertVisit(ToastVisitDTO dto , SqlSession sqlSession) throws Exception {
+	public boolean insertVisit(ToastVisitDTO dto , SqlSessionTemplate sqlSession) throws Exception {
 					
 		boolean isc = false;	
 		int cnt = sqlSession.insert(NS+"visitInsert", dto);
@@ -28,24 +28,24 @@ public class ToastVisitDao {
 		return isc;				
 	}
 
-	public int getTodayCount(SqlSession sqlSession) throws Exception{
+	public int getTodayCount(SqlSessionTemplate sqlSession) throws Exception{
 		return sqlSession.selectOne(NS+"visitTodayCount");
 	}
 
-	public int getTotalCount(SqlSession sqlSession) throws Exception{
+	public int getTotalCount(SqlSessionTemplate sqlSession) throws Exception{
 		return sqlSession.selectOne(NS+"visitTotalCount");
 	}
 
-	public List<ToastVisitDTO> selDate(SqlSession sqlSession) {
+	public List<ToastVisitDTO> selDate(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList(NS+"selDate");
 		
 	}
 	
-	public String selBrowser(SqlSession sqlSession,String browser){
+	public String selBrowser(SqlSessionTemplate sqlSession,String browser){
 		return sqlSession.selectOne(NS+"selBrowser",browser);
 	}
 	
-	public String weeklyCount(SqlSession sqlSession, Map<String, String> map) {
+	public String weeklyCount(SqlSessionTemplate sqlSession, Map<String, String> map) {
 		return sqlSession.selectOne(NS+"weeklyCount", map);
 	}
 	
