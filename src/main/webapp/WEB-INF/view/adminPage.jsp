@@ -28,53 +28,22 @@ var ajaxAdminShow = function (){
 		data : "cmd=1",
 		dataType : "json",
 		success : function(obj){			
-//				alert("됬느야");
-//				alert(obj.lists[0].address);	
-				$.each(obj,function(key,value){
-					
-					var htmlTable ="";
-					
-					if(key=="lists"){
-						
-						htmlTable += "<tr>"+
-										"<th>USERID</th>"+
-										"<th>NICKNAME</th>"+
-										"<th>ADDRESS</th>"+
-										"<th>PHONE</th>"+
-										"<th>EMAIL</th>"+
-										"<th>AUTH</th>"+
-									   	"<th>REGDATE</th>"+
-									   	"<th>DELFLAG</th>"+
-									   	"<th>MODIFY</th>"+
-									 "</tr>";
-												
-				$.each(value,function(key,user){	
-					//alert(user.delflag);
-					//alert(user);
+			
+			var htmlTable ="";
 					htmlTable += "<tr>"+
-									"<td>"+user.userid+"</td>"+
-									"<td>"+user.nickname+"</td>"+
-									"<td>"+user.address+"</td>"+
-									"<td>"+user.phone+"</td>"+
-									"<td>"+user.email+"</td>"+
-									"<td>"+user.auth+"</td>"+
-									"<td>"+user.regdate+"</td>"+
-									"<td>"+
-										"<select id='ublock'>"+
-											"<option value='T'>T</option>"+
-											"<option value='F'>F</option>"+
-										"</select>"+
-									"</td>"+
-									"<td><button onclick='modify(\""+user.userid+"\")'>modify</button></td>"+
-								"</tr>";
-				});	
-						
-				}
-								
-					$("#toastuser").html(htmlTable);
-				
-			});	
-				
+					"<th>USERID</th>"+
+					"<th>NICKNAME</th>"+
+					"<th>ADDRESS</th>"+
+					"<th>PHONE</th>"+
+					"<th>EMAIL</th>"+
+					"<th>AUTH</th>"+
+				   	"<th>REGDATE</th>"+
+				   	"<th>DELFLAG</th>"+
+				   	"<th>MODIFY</th>"+
+				 "</tr>";
+				 
+				 htmlTable += obj.result;
+				$("#toastuser").html(htmlTable);
 		} , error : function() {
 			alert("실패");
 		}
@@ -94,7 +63,8 @@ var ajaxModify = function (userid) {
 		url : "userBlock.do",
 		type : "get",
 		asyn : false,
-		data : { 'userid': userid },
+		data : { 'userid': userid,
+				'delflag': $("#ublock option:selected").val(),	},
 		success : function(isc){
 			
 			alert("userBlock 변경");
