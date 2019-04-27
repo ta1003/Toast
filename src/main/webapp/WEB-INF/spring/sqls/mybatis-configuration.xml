@@ -3,12 +3,14 @@
 <configuration>
 <!-- 13^^번 -->
 	<typeAliases>
-		<typeAlias type="com.min.edu.dtos.ToastCalDTO" alias="CDto"/>
-		<typeAlias type="com.min.edu.dtos.ToastPagingDTO" alias="PDto"/>
+		<typeAlias type="com.happy.toast.dtos.ToastCalDTO" alias="CDto"/>
+		<typeAlias type="com.happy.toast.dtos.ToastPagingDTO" alias="PDto"/>
+		<typeAlias type="com.happy.toast.dtos.ToastVisitDTO" alias="VDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/sqls/ToastCalMapper.xml"/>
+		<mapper resource="/sqls/ToastVisitMapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.toast.visit">
+ 	
+ 	<insert id="visitInsert" parameterType="VDto">
+            INSERT INTO TOASTVISIT
+          	(SEQ, VDATE,USERID,BROWSER) 
+          	VALUES
+          	(VISIT_SEQ.NEXTVAL, SYSDATE , #{userid} , #{browser})
+    </insert>
+    
+    <select id="visitTodayCount" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM TOASTVISIT
+		  WHERE TO_DATE(VDATE, 'YYYY-MM-DD') = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+    </select>
+    
+    <select id="visitTotalCount" resultType="java.lang.Integer">
+    		SELECT COUNT(*) 
+				FROM TOASTVISIT
+    </select>
+ 
+ 	<select id="selDate" resultType="VDto">
+ 		SELECT TO_CHAR(SYSDATE - 7 + ROWNUM, 'YYYY-MM-DD') VDATE
+   			FROM TOASTVISIT
+ 	 	WHERE ROWNUM <![CDATA[<=]]> 8
+ 	</select>
+ 
+ 
+ 	<select id="selBrowser" resultType="java.lang.String" parameterType="java.lang.String">
+ 		SELECT COUNT(*)
+			FROM TOASTVISIT
+				WHERE BROWSER=#{browser}
+ 	</select>
+ 
+ 	<select id="weeklyCount" resultType="java.lang.String" parameterType="java.util.Map">
+ 		SELECT COUNT(*) FROM TOASTVISIT WHERE VDATE  
+			BETWEEN TO_DATE(#{before}, 'YYYY-MM-DD') 
+				AND TO_DATE(#{after}, 'YYYY-MM-DD')
+ 	</select>
+ 
+ 
+ 
+ 
+ 
+</mapper>

@@ -59,7 +59,7 @@
 	<!-- 17번  -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" 
-			pointcut="execution(public * com.min.edu.model.*Service*.*(..))"/>
+			pointcut="execution(public * com.happy.toast.model.*Service*.*(..))"/>
 	</aop:config>
 	
 	

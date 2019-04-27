@@ -12,7 +12,7 @@
 
 	<!-- Bean을 생성하기 위한 클래스를 연동하는 context -->
 	<!-- 설정된 Top-package에 있는 모듭 @(annotation)을 Bean으로 등록 -->
-	<context:component-scan base-package="com.min.edu"/>
+	<context:component-scan base-package="com.happy.toast"/>
 	
 	<!-- Annotation을 사용하여 탐색을 진행 가능하도록 함 -->
 	<mvc:annotation-driven/>
@@ -34,7 +34,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/interceptor.do"/>
-			<bean class="com.min.edu.interceptor.Interceptor"/>
+			<bean class="com.happy.toast.interceptor.Interceptor"/>
 		</mvc:interceptor>
 		<!-- 브라우저의 back 이동페이지의 작동을 하지 못하도록 캐쉬를 브라우저의 캐쉬를 삭제 해줌 -->
 		<bean id="webContentInterceptor"
