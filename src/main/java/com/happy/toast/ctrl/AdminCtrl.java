@@ -7,11 +7,15 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.happy.toast.dtos.ToastUserDTO;
+import com.happy.toast.model.IToastUserService;
 
 
 @Controller
@@ -19,6 +23,8 @@ public class AdminCtrl {
 
 	private Logger logger = LoggerFactory.getLogger(AdminCtrl.class);
 	
+	@Autowired
+	private IToastUserService iUserService;
 	
 	@RequestMapping(value="/adminMain.do", method=RequestMethod.GET)
 	public String admin() {
@@ -59,7 +65,8 @@ public class AdminCtrl {
 		System.out.println(model);
 		System.out.println(map);
 		model.addAttribute("dto", map);
-		
+		List<ToastUserDTO> lists =  iUserService.userSelectAll();
+		System.out.println(lists.get(0));
 		return map;
 	}
 	

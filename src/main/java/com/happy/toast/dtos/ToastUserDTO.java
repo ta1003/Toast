@@ -2,7 +2,7 @@ package com.happy.toast.dtos;
 
 import java.io.Serializable;
 
-public class ToastUser_DTO implements Serializable {
+public class ToastUserDTO implements Serializable {
 
 	
 	private static final long serialVersionUID = 768729796133533136L;
@@ -16,11 +16,11 @@ public class ToastUser_DTO implements Serializable {
 	private String auth;
 	private String regdate;
 
-	public ToastUser_DTO() {
+	public ToastUserDTO() {
 	}
 
 	
-	public ToastUser_DTO(String userid, String password, String nickname, String email, String auth, String regdate) {
+	public ToastUserDTO(String userid, String password, String nickname, String email, String auth, String regdate) {
 		super();
 		this.userid = userid;
 		this.password = password;

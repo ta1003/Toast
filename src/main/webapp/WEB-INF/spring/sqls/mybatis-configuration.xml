@@ -6,11 +6,13 @@
 		<typeAlias type="com.happy.toast.dtos.ToastCalDTO" alias="CDto"/>
 		<typeAlias type="com.happy.toast.dtos.ToastPagingDTO" alias="PDto"/>
 		<typeAlias type="com.happy.toast.dtos.ToastVisitDTO" alias="VDto"/>
+		<typeAlias type="com.happy.toast.dtos.ToastUserDTO" alias="UDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/sqls/ToastCalMapper.xml"/>
 		<mapper resource="/sqls/ToastVisitMapper.xml"/>
+		<mapper resource="/sqls/ToastUserMapper.xml"/>
 	</mappers>
 
 </configuration>
