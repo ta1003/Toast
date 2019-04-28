@@ -1,7 +1,7 @@
 <!-- footer -->
 
-
-<nav class="navbar navbar-default" style="width: 100%; ">  
+<footer>
+<nav class="navbar navbar-default" style="width: 100%; background-color: #A9A9F5">  
     <div class="navbar-footer" style="text-align: center;">
      <p style="width: 100%;">
       Web Master - coming soon~!
@@ -10,6 +10,7 @@
   	 </p>
     </div>      
 </nav>
+</footer>
 <!-- footer -->
 
 

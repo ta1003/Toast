@@ -184,15 +184,19 @@ p{
 	<div id="layout">					
 		<%@ include file="/WEB-INF/view/Header.jsp"%>		
 		<div id="toast">			
-			
+				<div style="width: 200px; float: left; text-align: center">
+					${uDto.nickname }님 환영합니다.<br><br>
+					<a href="./userDetail.do">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="./logOut.do">로그아웃</a>
+				</div>
 				<%
 					for(int i = 0; i < lists.size()/3; i++){						
 				%>				
-						<div style="width:700px; height:180px;">
+						<div style="width:700px; height:180px; margin-left: 250px;">
 				<%
 						for(int j = 0 ; j < 3 ; j++){
 				%>
-							<div style="float: left; margin-right: 50px;">
+							<div style="float: left; margin-right: 50px; border: 1px solid #FF8000; background-color: #F7BE81;">
 							<input type="checkbox" name="chk" value="<%=lists.get(i*3+j).getCalid()%>">&nbsp;&nbsp;<a  id="<%=lists.get(i*3+j).getCalid()%>" href='#' onclick="showCal('<%=lists.get(i*3+j).getCalid()%>')"><%=lists.get(i*3+j).getCaltitle()%></a> <br>
 							<img style="width: 180px; height: 135px;" src="./img/month.PNG">
 							</div>
@@ -207,12 +211,12 @@ p{
 				<%
 					if(lists.size()%3 != 0){
 				%>				
-					<div style="width:700px; height:180px;">
+					<div style="width:700px; height:180px; margin-left: 250px;">
 				<%
 						for(int i = 0 ; i < lists.size()%3; i++){
 				%>
-						<div style="float: left; margin-right: 50px;">
-							 <input type="checkbox" name="chk" value="<%=lists.get((lists.size()/3)*3+i).getCalid()%>">&nbsp;&nbsp;<a id="<%=lists.get((lists.size()/3)*3+i).getCalid()%>" href='#' onclick="showCal('<%=lists.get((lists.size()/3)*3+i).getCalid()%>')"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
+						<div style="float: left; margin-right: 50px; border: 1px solid #FF8000; background-color: #F7BE81;">
+							 <input type="checkbox" name="chk" value="<%=lists.get((lists.size()/3)*3+i).getCalid()%>">&nbsp;&nbsp;<a  id="<%=lists.get((lists.size()/3)*3+i).getCalid()%>" href='#' onclick="showCal('<%=lists.get((lists.size()/3)*3+i).getCalid()%>')"><%=lists.get((lists.size()/3)*3+i).getCaltitle() %></a> <br>
 							 <img style="width: 180px; height: 135px;" src="./img/month.PNG">
 						</div>
 				<%
@@ -224,27 +228,28 @@ p{
 				%>					
 		</div>			
 			
-			<a href="./userDetail.do">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="./logOut.do">로그아웃</a>
+			
 			<div style="text-align: center;">
-				<a href="./calListCtrl.do?pageNo=<%=pDto.getFirstPageNo()%>">◁</a>
-				<a href="./calListCtrl.do?pageNo=<%=pDto.getPrevPageNo()%>">◀</a>
-							
-									<%
-										for(int i = pDto.getStartPageNo();i<=pDto.getEndPageNo();i++){
-									%>
-										<a href="./calListCtrl.do?pageNo=<%=i%>"><%=i%></a>
-									<%
-										}
-									%>
-									
-				<a href="./calListCtrl.do?pageNo=<%=pDto.getNextPageNo()%>">▶</a>
-				<a href="./calListCtrl.do?pageNo=<%=pDto.getEndPageNo()%>">▷</a>
+				<ul class="pagination">
+					<li><a href="./calListCtrl.do?pageNo=<%=pDto.getFirstPageNo()%>">◁</a></li>
+					<li><a href="./calListCtrl.do?pageNo=<%=pDto.getPrevPageNo()%>">◀</a></li>
+								
+										<%
+											for(int i = pDto.getStartPageNo();i<=pDto.getEndPageNo();i++){
+										%>
+											<li><a href="./calListCtrl.do?pageNo=<%=i%>"><%=i%></a></li>
+										<%
+											}
+										%>
+										
+					<li><a href="./calListCtrl.do?pageNo=<%=pDto.getNextPageNo()%>">▶</a></li>
+					<li><a href="./calListCtrl.do?pageNo=<%=pDto.getEndPageNo()%>">▷</a></li>
+				</ul>
 			</div>
 			
 			
-			<button class="btn btn-default btn-lg" id="createCalendarForm">등록</button>
-			<button id="deleteCalendarForm">삭제</button>	
+			<button class="btn btn-default btn-primary" id="createCalendarForm">등록</button>
+			<button  class="btn btn-default btn-danger" id="deleteCalendarForm">삭제</button>	
 				
 			
 			

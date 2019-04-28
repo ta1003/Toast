@@ -321,21 +321,29 @@
 	 	$("#calType").change(function() {			
 			calendar.changeView($("#calType option:selected").val(),true);
 		});
+	 	
+	 	$("#back").click(function() {
+			location.href="./calListCtrl.do?pageNo=1";
+		});
 	});
 </script>
 
 <body>
-<h1>
-	CALENDAR : ${calTitle} 
-</h1>	  	
-	<div id="menu">
-	  <p id="now"></p>	
-      <button id="prev">◀</button>
-      <button id="next">▶</button>      
-    </div>
-	
-	<input name="title" type="hidden">
-	<div id="calendar" style="width:800px; height: 600px;"></div>		
-	
+<div id="layout">					
+		<%@ include file="/WEB-INF/view/Header.jsp"%>
+		<div id="toast" style="margin-left: 100px;">
+			<div id="menu">
+			  <p id="now"></p>	
+		      <button id="prev">◀</button>
+		      <button id="next">▶</button>      
+		    </div>
+			
+			<input name="title" type="hidden">
+			<div id="calendar" style="width:800px; height: 600px;"></div>	
+			</div>
+			
+			<button class="btn btn-default btn-primary" id="back">이전으로</button>
+		<%@ include file="/WEB-INF/view/Footer.jsp"%>	
+	</div>
 </body>
 </html>

@@ -7,7 +7,12 @@
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
 </head>
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	function userlogin() {
 			
@@ -30,19 +35,26 @@
 			}
 		});
 	}
+	
+	function signUp() {
+		location.href="./signUp.do";
+	}
+	
+	
 </script>
 
 <body>
-	 <form action="./login.do" method="post" id="loginform" onsubmit="return false;">	 
-		<span>아이디:</span><input type="text" name="userid"><br>
-		<span>비밀번호:</span><input type="text" name="password"><br>
-		<input type="submit" onclick="userlogin()" value="로그인"><br>
-	</form>
-	
-	<a href="./login.do?auth=U">유저 페이지</a>
-	<a href="./login.do?auth=A">관리자 페이지</a>
-	
-	<br><a href="./signUp.do">회원가입</a>
-	
+	<div id="layout">					
+		<%@ include file="/WEB-INF/view/Header.jsp"%>
+		<div id="toast">
+			 <form action="./login.do" method="post" id="loginform" onsubmit="return false;">	 
+				<span>아이디:&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" name="userid"><br>
+				<span>비밀번호:</span><input type="text" name="password"><br>
+				<button class="btn btn-default" onclick="userlogin()">로그인</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button class="btn btn-default" onclick="signUp()">회원가입</button><br>
+			</form>						
+		</div>
+		<%@ include file="/WEB-INF/view/Footer.jsp"%>
+	</div>
 </body>
 </html>

@@ -85,5 +85,18 @@ version="3.1">
 		<location>/WEB-INF/view/err/404Error.jsp</location>		
 	</error-page>	
 	
+	<error-page>
+		<!-- 코드표 200(성공코드) , 300(서버가 응답하지 못하는 상태), 400 , 500 (값이 조합이 안됬을때)-->
+		<error-code>405</error-code>
+		<location>/userLogin.jsp</location>		
+	</error-page>
+	
+	
+	<error-page>
+		<!-- 코드표 200(성공코드) , 300(서버가 응답하지 못하는 상태), 400 , 500 (값이 조합이 안됬을때)-->
+		<error-code>500</error-code>
+		<location>/userLogin.jsp</location>		
+	</error-page>
+	
   
 </web-app>
