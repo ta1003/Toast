@@ -143,7 +143,7 @@ public class AdminCtrl {
 				
 		String htmlresult = "";
 		for(int i = 0 ; i < lists.size() ; ++i) {
-			htmlresult +=  "<tr>"+
+			htmlresult += "<tr>"+
 					"<td>"+lists.get(i).getUserid()+"</td>"+
 					"<td>"+lists.get(i).getNickname()+"</td>"+
 					"<td>"+lists.get(i).getAddress()+"</td>"+
@@ -168,18 +168,22 @@ public class AdminCtrl {
 					"</tr>";
 		}			
 		 
-   	 	htmlresult += "<td><a href='#' onclick='userListCtrl("+pDto.getFirstPageNo()+")'>◁</a>"+
-	 				"<a href='#'  onclick ='userListCtrl("+pDto.getPrevPageNo()+")'>◀</a>";
+   	 	htmlresult += "<tr style='text-align: center;'>"
+   	 			+ "<td colspan='9' align='center'><ul class='pagination'>"
+   	 			+ "<li><a href='#' onclick='userListCtrl("+pDto.getFirstPageNo()+")'>◁</a></li>"+
+	 				"<li><a href='#'  onclick ='userListCtrl("+pDto.getPrevPageNo()+")'>◀</a></li>";
 				 	
    	 	for(int i = pDto.getStartPageNo();i<=pDto.getEndPageNo();i++){
-   	 		htmlresult += "<a href='#'  onclick='userListCtrl("+i+")'>"+i+"</a>";
+   	 		htmlresult += "<li><a href='#'  onclick='userListCtrl("+i+")'>"+i+"</a></li>";
 			
 		} 
 			
 								
-   	 htmlresult +="<a href='#'  onclick='userListCtrl("+pDto.getNextPageNo()+")'>▶</a>"+
-					"<a href='#'  onclick='userListCtrl("+pDto.getEndPageNo()+")'>▷</a>"+ 
-					"</td>";
+   	 htmlresult +="<li><a href='#'  onclick='userListCtrl("+pDto.getNextPageNo()+")'>▶</a></li>"+
+					"<li><a href='#'  onclick='userListCtrl("+pDto.getEndPageNo()+")'>▷</a></li>"+ 
+					"</ul></td>"+
+					"</tr>"+
+					"</table>";
 		
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("result", htmlresult);

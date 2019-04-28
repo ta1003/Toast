@@ -29,6 +29,17 @@
 
 <link rel='stylesheet' type='text/css' href='./dist/tui-chart.css'/>
 
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+
+
 
 <!-- js -->
 
@@ -37,24 +48,30 @@
 <script type='text/javascript' src='https://uicdn.toast.com/tui.chart/latest/raphael.js'></script>
 <script src='./dist/tui-chart.js'></script>
 
-
+<div id="layout">
+<%@ include file="/WEB-INF/view/Header.jsp"%>
 
 	<div style="padding-left: 53%;">
 		<label>전체 방문자 <br>
 		 ${sessionScope.totalCount} 명 
-		</label><br>
-		<label style="float: right;">오늘 방문자<br>
+		</label>
+		<label style="float: right; margin-right: 150px;">오늘 방문자<br>
 		 ${sessionScope.todayCount} 명
 		 </label>
 	</div>
 	<div style="padding-right: 50px; padding-left: 50px;">
 		<div id="piechart-area" style="position: relative;">
+		
+				
 		<div id="barchart-area" style="float: right;"></div>
 		</div>
 	</div>
+		<div style="float: left;">
+		<input type="button" value="돌아가기" onclick="history.back(-1)">
+		</div>
 
-
-
+<%@ include file="/WEB-INF/view/Footer.jsp"%>
+</div>
 
 <script type="text/javascript">
 		
@@ -146,11 +163,11 @@
 	    series: [
 	        {//컬럼(바) 하나
 	            name: 'TEST용1', // 막대 하나의 이름(입력되는 각 세부항목의 이름)
-	            data: [5, 3, 5, 7, 6, 4, 1] // 하나의 막대에 입력되는 세부 데이터
+	            data: [20, 30, 50, 70, 63, 40, 10] // 하나의 막대에 입력되는 세부 데이터
 	        },
 	         {
 	            name: 'TEST용2',
-	            data: [8, 1, 7, 2, 6, 3, 5]
+	            data: [80, 10, 70, 20, 60, 30, 50]
 	        },
 	        {
 	            name: '결과보기',
@@ -164,14 +181,14 @@
 	var options = {
 	    chart: { // 차트 크기 조절
 	        width: 600,
-	        height: 450,
+	        height: 400,
 	        title: '일주일간 접속현황', // 차트 제목
 	        format: '1000'
 	    },
 	    yAxis: {
 	        title: 'Amount', // y축 제목
 	        min: 0, 		// 최소 값
-	        max: 100		// 최대 값
+	        max: 200		// 최대 값
 	    },
 	    xAxis: {
 	        title: 'Month' // x축 타이틀
