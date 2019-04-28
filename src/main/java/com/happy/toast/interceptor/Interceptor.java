@@ -12,30 +12,30 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
-//servlet-context.xml ?˜ Interceptorë¥? ì²˜ë¦¬?•´ì£¼ëŠ” Class
+//servlet-context.xml ì˜ Interceptorë¥¼ ì²˜ë¦¬í•´ì£¼ëŠ” Class
 public class Interceptor extends HandlerInterceptorAdapter {
 
 	private Logger logger = LoggerFactory.getLogger(Interceptor.class);
 	
-	// ?¸?„°?…‰?„°ê°? ?‹œ?‘? ?•Œ
+	// ì¸í„°ì…‰í„°ê°€ ì‹œì‘ë ë•Œ
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.debug("?¸?„°?…‰?„°ê°? ?‹œ?‘?˜?—ˆ?Šµ?‹ˆ?‹¤ :)  {}", new Date());
+		logger.debug("ì¸í„°ì…‰í„°ê°€ ì‹œì‘ë˜ì—ˆìŠµë‹ˆë‹¤ :)  {}", new Date());
 		HttpSession session = request.getSession();
 		//session.getAttribute("loginDto");
 		if(session.getAttribute("loginDto") == null) {
-			response.sendRedirect("./ind.jsp"); // ?¼ë¶??Ÿ¬ ?—?Ÿ¬ ?™•?¸?„ ?œ„?•´ . ì°ìœ¼ë©? ?œ?‹¤ 
+			response.sendRedirect("./ind.jsp"); // ì¼ë¶€ëŸ¬ ì—ëŸ¬ í™•ì¸ì„ ìœ„í•´ . ì°ìœ¼ë©´ ëœë‹¤ 
 			return false;
 		}
 		return super.preHandle(request, response, handler);
 	}
-	// ?¸?„°?…‰?„°ê°? ì§??‚˜ê°?ê³? ?‚˜?„œ 
+	// ì¸í„°ì…‰í„°ê°€ ì§€ë‚˜ê°€ê³  ë‚˜ì„œ 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {	
-		logger.debug("?¸?„°?…‰?„°ê°? ì¢…ë£Œ?˜?—ˆ?Šµ?‹ˆ?‹¤ :)  {}", new Date());
+		logger.debug("ì¸í„°ì…‰í„°ê°€ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤ : {}", new Date());
 		super.postHandle(request, response, handler, modelAndView);
 	}
 

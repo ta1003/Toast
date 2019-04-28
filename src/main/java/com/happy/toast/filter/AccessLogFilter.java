@@ -20,7 +20,7 @@ public class AccessLogFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
-		System.out.println("======");
+		System.out.println("======필터 시작");
 	}
 
 	@Override
@@ -31,15 +31,15 @@ public class AccessLogFilter implements Filter {
 		String query = (req.getQueryString() == null? "":"?"+req.getQueryString());
 		
 		String result = url+query;
-		logger.info("====== ======");
-		logger.info(" 결과:"+result);
+		logger.info("====== 필터 실행 ======");
+		logger.info("화면 이동 필터 결과:"+result);
 		
 		chain.doFilter(request, response);
 	}
 
 	@Override
 	public void destroy() {
-		System.out.println("=====종료");
+		System.out.println("======필터 종료");
 	}
 
 }

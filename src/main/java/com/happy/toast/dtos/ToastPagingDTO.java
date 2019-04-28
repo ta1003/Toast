@@ -2,22 +2,22 @@ package com.happy.toast.dtos;
 
 public class ToastPagingDTO {
 	
-	private int pageListSize; 		// ?˜?´ì§? ëª©ë¡?˜ ?‚¬?´ì¦? (ex) 10ê°œë¡œ ? •?•˜ë©? <1~10> 5ê°œë¡œ ? •?•˜ë©? <1~5>) 	
-	private int nowPageNo;    		// ?˜„?¬ ?˜?´ì§? ë²ˆí˜¸
-	private int totalBoardSize;     // ì´? ê²Œì‹œê¸? ê°œìˆ˜
-	private int pageBoardSize;      // ?˜?´ì§??‹¹ ë³´ì—¬ì¤? ê²Œì‹œê¸? ?¬ê¸? (ex)5ë¡? ? •?•˜ë©? 1?˜?´ì§??‹¹ ê²Œì‹œê¸? 5ê°œë?? ë³´ì—¬ì¤?)
+	private int pageListSize; 		// í˜ì´ì§€ ëª©ë¡ì˜ ì‚¬ì´ì¦ˆ (ex) 10ê°œë¡œ ì •í•˜ë©´ <1~10> 5ê°œë¡œ ì •í•˜ë©´ <1~5>) ) 	
+	private int nowPageNo;    		// í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
+	private int totalBoardSize;     // ì´ ê²Œì‹œê¸€ ê°œìˆ˜
+	private int pageBoardSize;      // í˜ì´ì§€ë‹¹ ë³´ì—¬ì¤„ ê²Œì‹œê¸€ í¬ê¸° (ex)5ë¡œ ì •í•˜ë©´ 1í˜ì´ì§€ë‹¹ ê²Œì‹œê¸€ 5ê°œë¥¼ ë³´ì—¬ì¤Œ)
 	
-	private int firstPageNo; 		// ì²˜ìŒ ?˜?´ì§? ë²ˆí˜¸  (ë§Œì•½ ?˜?´ì§? ê°œìˆ˜ê°? ì´? 42ê°œë¼ë©? firstPageNo?? 1)
-	private int lastPageNo; 		// ë§ˆì?ë§? ?˜?´ì§? ë²ˆí˜¸  (ë§Œì•½ ?˜?´ì§? ê°œìˆ˜ê°? ì´? 42ê°œë¼ë©? lastPageNo?? 1)
+	private int firstPageNo; 		// ì²˜ìŒ í˜ì´ì§€ ë²ˆí˜¸  (ë§Œì•½ í˜ì´ì§€ ê°œìˆ˜ê°€ ì´ 42ê°œë¼ë©´ firstPageNoì€ 1)
+	private int lastPageNo; 		// ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸  (ë§Œì•½ í˜ì´ì§€ ê°œìˆ˜ê°€ ì´ 42ê°œë¼ë©´ lastPageNoì€ 1)
 	
-	private int prevPageNo; 		// ?˜„?¬ ?˜?´ì§??—?„œ ?´? „ ?˜?´ì§? ë²ˆí˜¸
-	private int nextPageNo; 		// ?˜„?¬ ?˜?´ì§??—?„œ ?‹¤?Œ ?˜?´ì§? ë²ˆí˜¸
+	private int prevPageNo; 		// í˜„ì¬ í˜ì´ì§€ì—ì„œ ì´ì „ í˜ì´ì§€ ë²ˆí˜¸
+	private int nextPageNo; 		// í˜„ì¬ í˜ì´ì§€ì—ì„œ ë‹¤ìŒ í˜ì´ì§€ ë²ˆí˜¸
 	
-	private int startPageNo; 		// ?˜„?¬ ?˜?´ì§? ëª©ë¡?“¤(ex)<11~20>)?—?„œ ?‹œ?‘ ?˜?´ì§? ë²ˆí˜¸ 
-	private int endPageNo;   		// ?˜„?¬ ?˜?´ì§? ëª©ë¡?“¤(ex)<11~20>)?—?„œ ë§¨ë ?˜?´ì§? ë²ˆí˜¸
+	private int startPageNo; 		// í˜„ì¬ í˜ì´ì§€ ëª©ë¡ë“¤(ex)<11~20>)ì—ì„œ ì‹œì‘ í˜ì´ì§€ ë²ˆí˜¸ 
+	private int endPageNo;   		// í˜„ì¬ í˜ì´ì§€ ëª©ë¡ë“¤(ex)<11~20>)ì—ì„œ ë§¨ë í˜ì´ì§€ ë²ˆí˜¸
 	
-	private int firstBoardNo;		// ?˜„?¬ ?˜?´ì§??—?„œ ?‹œ?‘ ê²Œì‹œê¸? ë²ˆí˜¸
-	private int endBoardNo;			// ?˜„?¬ ?˜?´ì§??—?„œ ë§ˆì?ë§? ê²Œì‹œê¸? ë²ˆí˜¸
+	private int firstBoardNo;		// í˜„ì¬ í˜ì´ì§€ì—ì„œ ì‹œì‘ ê²Œì‹œê¸€ ë²ˆí˜¸
+	private int endBoardNo;			// í˜„ì¬ í˜ì´ì§€ì—ì„œ ë§ˆì§€ë§‰ ê²Œì‹œê¸€ ë²ˆí˜¸
 	
 	
 	public ToastPagingDTO() {
@@ -123,42 +123,42 @@ public class ToastPagingDTO {
 			setPageBoardSize(10);
 		}
 		
-		int finalPage = (totalBoardSize+(pageBoardSize-1))/pageBoardSize; // ë§ˆì?ë§? ?˜?´ì§? ë²ˆí˜¸
+		int finalPage = (totalBoardSize+(pageBoardSize-1))/pageBoardSize; // ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸
 		
-		// ?˜„?¬ ?˜?´ì§?ê°? ë§ˆì?ë§? ?˜?´ì§?ë³´ë‹¤ ?´ê²½ìš° ?˜„?¬ ?˜?´ì§?ë¥? ë§ˆì?ë§? ?˜?´ì§?ë¡? ?„¤? •
+		// í˜„ì¬ í˜ì´ì§€ê°€ ë§ˆì§€ë§‰ í˜ì´ì§€ë³´ë‹¤ í´ê²½ìš° í˜„ì¬ í˜ì´ì§€ë¥¼ ë§ˆì§€ë§‰ í˜ì´ì§€ë¡œ ì„¤ì •
 		if(nowPageNo > finalPage) {
 			setNowPageNo(finalPage);			
 		}
 		
-		boolean isPageNowFirst = (nowPageNo == 1)? true:false; 			// ?˜„?¬ ?˜?´ì§?ê°? ë§¨ì²˜?Œ?¸ì§?
-		boolean isPageNowLast = (nowPageNo == finalPage)? true:false;	// ?˜„?¬ ?˜?´ì§?ê°? ë§ˆì?ë§‰ì¸ì§?
+		boolean isPageNowFirst = (nowPageNo == 1)? true:false; 			// í˜„ì¬ í˜ì´ì§€ê°€ ë§¨ì²˜ìŒì¸ì§€
+		boolean isPageNowLast = (nowPageNo == finalPage)? true:false;	// í˜„ì¬ í˜ì´ì§€ê°€ ë§ˆì§€ë§‰ì¸ì§€
 		
-		// ?˜„?¬ ?˜?´ì§? ë²ˆí˜¸?—?„œ ë³´ì—¬ì¤? ?˜?´ì§? ë¦¬ìŠ¤?Š¸ ë²ˆí˜¸ (ex) ?˜„?¬ ?˜?´ì§?ê°? 8?´?¼ë©? <6~10>)
+		// í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ì—ì„œ ë³´ì—¬ì¤„ í˜ì´ì§€ ë¦¬ìŠ¤íŠ¸ ë²ˆí˜¸ (ex) í˜„ì¬ í˜ì´ì§€ê°€ 8ì´ë¼ë©´ <6~10>)
 		int startPage = ((nowPageNo-1)/pageListSize)*pageListSize+1;
 		int endPage = startPage+(pageListSize-1);
 		
-		// ?˜„?¬ ?˜?´ì§? ë²ˆí˜¸?—?„œ ë³´ì—¬ì¤? ê²Œì‹œê¸? ë²ˆí˜¸?“¤ (ex) ?˜„?¬ ?˜?´ì§?ê°? 8?´?¼ë©? 71~80ê°œì˜ ê²Œì‹œê¸?)
+		// í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ì—ì„œ ë³´ì—¬ì¤„ ê²Œì‹œê¸€ ë²ˆí˜¸ë“¤ (ex) í˜„ì¬ í˜ì´ì§€ê°€ 8ì´ë¼ë©´ 71~80ê°œì˜ ê²Œì‹œê¸€)
 		int startBoard = nowPageNo*pageBoardSize-(pageBoardSize-1);
 		int endBoard = nowPageNo*pageBoardSize;
 		
-		// endPageê°? ë§ˆì?ë§? ?˜?´ì§?ë¥? ?„˜?„?ˆ˜ ?—†?„ë¡?
+		// endPageê°€ ë§ˆì§€ë§‰ í˜ì´ì§€ë¥¼ ë„˜ì„ìˆ˜ ì—†ë„ë¡
 		if(endPage > finalPage) {
 			endPage = finalPage;
 		}
 		
-		// ?˜„?¬ ?˜?´ì§?ê°? ì²«ë²ˆì§¸í˜?´ì§??¼ë©? 
+		// í˜„ì¬ í˜ì´ì§€ê°€ ì²«ë²ˆì§¸í˜ì´ì§€ë¼ë©´ 
 		if(isPageNowFirst) {
 			setPrevPageNo(1);
 		}else {
 			setPrevPageNo((nowPageNo-1)<0? 1:(nowPageNo-1));
 		}
-		// ?˜?´ì§? ?Š¤???Š¸,?—”?“œ ë²ˆí˜¸
+		// í˜ì´ì§€ ìŠ¤íƒ€íŠ¸,ì—”ë“œ ë²ˆí˜¸
 		setStartPageNo(startPage);
 		setEndPageNo(endPage);
-		// ê²Œì‹œê¸? ?Š¤???Š¸,?—”?“œ ë²ˆí˜¸ 
+		// ê²Œì‹œê¸€ ìŠ¤íƒ€íŠ¸,ì—”ë“œ ë²ˆí˜¸ 
 		setFirstBoardNo(startBoard);
 		setEndBoardNo(endBoard);
-		// ?˜„?¬ ?˜?´ì§?ê°? ë§ˆì?ë§‰í˜?´ì§??¼ë©?
+		// í˜„ì¬ í˜ì´ì§€ê°€ ë§ˆì§€ë§‰í˜ì´ì§€ë¼ë©´
 		if(isPageNowLast) {
 			setNextPageNo(finalPage);
 		}else {

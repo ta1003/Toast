@@ -7,12 +7,12 @@ public class ToastCalDTO {
 	private String userid;
 	private String caltype;
 		
-	//?””?´?Š¸
+	//ë””í´íŠ¸
 	public ToastCalDTO() {
 		super();
 	}
 	
-	// ?„?‹œ ?ƒ?„±?(?‚˜ì¤‘ì— ë°”ê?ê²?)
+	// ì„ì‹œ ìƒì„±ì(ë‚˜ì¤‘ì— ë°”ê¿€ê²ƒ)
 	public ToastCalDTO(int calid, String caltitle, String calcontent, String userid, String caltype) {
 		super();
 		this.calid = calid;
