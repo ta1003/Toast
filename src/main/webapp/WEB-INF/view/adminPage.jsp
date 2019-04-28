@@ -39,7 +39,8 @@ var ajaxAdminShow = function (){
 		success : function(obj){			
 			
 			var htmlTable ="";
-					htmlTable += "<tr>"+
+					htmlTable += "<table class='table table-bordered'>"+  
+						"<tr>"+
 					"<th>USERID</th>"+
 					"<th>NICKNAME</th>"+
 					"<th>ADDRESS</th>"+
@@ -70,7 +71,8 @@ var userListCtrl = function(value) {
 		success : function(obj){			
 			alert(obj);
 			var htmlTable ="";
-					htmlTable += "<tr>"+
+					htmlTable += "<table class='table table-bordered'>"+ 
+						"<tr>"+
 					"<th>USERID</th>"+
 					"<th>NICKNAME</th>"+
 					"<th>ADDRESS</th>"+
@@ -126,36 +128,32 @@ var ajaxModify = function (userid) {
 <div id="layout">
 	<%@ include file="/WEB-INF/view/Header.jsp"%>		
 	<div id="toast">
-	<a href="#" onclick="adminShow()">Show All Users</a>
+	
+	<div id="container" style="float: right; margin-right: 25%;">
+		<form action="#" method="post" id="toastuser" onsubmit="return false;">
+			
+	</form>
+				
+	</div>
+		
+	
+	
+	
+	<a href="#" onclick="adminShow()" >Show All Users</a>
 	<br>
+	
+	
 	<a href="./homepageState.do">Check Connected Users</a>
 	<br>
 	<a href="./logOut.do">Log Out</a>
-	
-	
-
-
-	<div id="container">
-		<form action="#" method="post" id="toastuser" onsubmit="return false;">
-			<table>
+	<div>
+		<input type="button" value="돌아가기" onclick="history.back(-1)">
 		
-			</table>
-		</form>
-		
-		
-		
-		
-		
-		
-		
-		<div>
-				<input type="button" value="돌아가기" onclick="history.back(-1)">
-		</div>
 	</div>
+	
+
+	
 </div>
-
-
-
 
 
 
