@@ -28,4 +28,10 @@ public interface IToastUserService {
 	public String 			  userEmailUpdateChk(Map<String,String> map);	
 
 	public int 				  userUpdate(ToastUserDTO dto);
+
+	public int				  userCnt();
+	
+	public List<ToastUserDTO> userAllSelect(Map<String, String> map);
+	
 }
+

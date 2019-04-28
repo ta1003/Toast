@@ -25,7 +25,7 @@ body {
 
 #toast {
 	flex: 7;
-	padding: 50px 150px;
+	padding: 50px 50px;
 }
 
 #toast>in_con { /* 컨테이너 안의 div 가운데 정렬 */

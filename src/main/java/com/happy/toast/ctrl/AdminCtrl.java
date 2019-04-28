@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.happy.toast.dtos.ToastPagingDTO;
 import com.happy.toast.dtos.ToastUserDTO;
 import com.happy.toast.dtos.ToastVisitDTO;
 import com.happy.toast.model.IToastUserService;
@@ -51,38 +55,38 @@ public class AdminCtrl {
 		logger.debug("ToastController hompageState 실행 ");
 		
 		// 원형차트에 뿌려줄 접속 브라우저 정보
-				List<ToastVisitDTO> vlists = VDao.selDate(sqlSession);
-				String chromeCnt = VDao.selBrowser(sqlSession,"Chrome");
-				String ieCnt = VDao.selBrowser(sqlSession,"IE");
-				String operaCnt = VDao.selBrowser(sqlSession,"Opera");
-				String safiriCnt = VDao.selBrowser(sqlSession,"Safiri");
-				String firefoxCnt = VDao.selBrowser(sqlSession,"Firefox");
-				String etcCnt = VDao.selBrowser(sqlSession,"Etc");
+		List<ToastVisitDTO> vlists = VDao.selDate(sqlSession);
+		String chromeCnt = VDao.selBrowser(sqlSession,"Chrome");
+		String ieCnt = VDao.selBrowser(sqlSession,"IE");
+		String operaCnt = VDao.selBrowser(sqlSession,"Opera");
+		String safiriCnt = VDao.selBrowser(sqlSession,"Safiri");
+		String firefoxCnt = VDao.selBrowser(sqlSession,"Firefox");
+		String etcCnt = VDao.selBrowser(sqlSession,"Etc");
+		
+		model.addAttribute("vlists", vlists);
+		
+		model.addAttribute("Chrome", chromeCnt);
+		model.addAttribute("IE", ieCnt);
+		model.addAttribute("Opera", operaCnt);
+		model.addAttribute("Safiri", safiriCnt);
+		model.addAttribute("Firefox", firefoxCnt);
+		model.addAttribute("Etc", etcCnt);
+		
+		
+		String[] weeklyCnt = {"0","0","0","0","0","0","0"};
+		
+		Map<String,String> map = new HashMap<String,String>();
+		// 최근 일주일간 접속한 방문자 수 카운팅
+		for(int i = 0 ; i < 7; i++) {
+			map.put("before", vlists.get(i).getVdate());
+			map.put("after", vlists.get(i+1).getVdate());
+			weeklyCnt[i]  = VDao.weeklyCount(sqlSession, map);	
+			System.out.println(weeklyCnt[i]);
+		}		
+		model.addAttribute("weeklyCnt", weeklyCnt);
+		
 				
-				model.addAttribute("vlists", vlists);
-				
-				model.addAttribute("Chrome", chromeCnt);
-				model.addAttribute("IE", ieCnt);
-				model.addAttribute("Opera", operaCnt);
-				model.addAttribute("Safiri", safiriCnt);
-				model.addAttribute("Firefox", firefoxCnt);
-				model.addAttribute("Etc", etcCnt);
-				
-				
-				String[] weeklyCnt = {"0","0","0","0","0","0","0"};
-				
-				Map<String,String> map = new HashMap<String,String>();
-				// 최근 일주일간 접속한 방문자 수 카운팅
-				for(int i = 0 ; i < 7; i++) {
-					map.put("before", vlists.get(i).getVdate());
-					map.put("after", vlists.get(i+1).getVdate());
-					weeklyCnt[i]  = VDao.weeklyCount(sqlSession, map);	
-					System.out.println(weeklyCnt[i]);
-				}		
-				model.addAttribute("weeklyCnt", weeklyCnt);
-				
-						
-				return "homepageState";
+		return "homepageState";
 	}
 	
 	
@@ -116,14 +120,27 @@ public class AdminCtrl {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/adminShowAll.do", method=RequestMethod.POST)
-	public Map<String,String> adminShowAll(Model model) {
+	@RequestMapping(value="/adminShowAll.do", method=RequestMethod.GET)
+	public Map<String,String> adminShowAll(HttpSession session,Model model,@RequestParam("pageNo") String pageNo) {
 		//JSONObject json = null;
-		// 회원 정보 전체 조회를 JSON에 담음
-		List<ToastUserDTO>  lists = iUserService.userSelectAll();
-		//json = objectJson(iUserService.userSelectAll());
-		//logger.info("Controller adminShowAll{}",json.toString());
+		// 페이지 처리를 위한 pageDto 생성		
+		if (pageNo == null || pageNo == "" || pageNo == "0")
+			pageNo = "1";
 		
+		int cnt = iUserService.userCnt();
+		if(cnt==0) cnt=1;
+		ToastPagingDTO pDto = new ToastPagingDTO(5,Integer.parseInt(pageNo),cnt, 5);
+		session.setAttribute("pDto", pDto);
+		
+		// 화면에 뿌려줄 갯수를 맵에 저장
+		Map<String,String> userResult = new HashMap<String,String>();
+		userResult.put("firstuserno", String.valueOf(pDto.getFirstBoardNo()));
+		userResult.put("enduserno", String.valueOf(pDto.getEndBoardNo()));
+		
+		// 페이지만큼 뿌려줄 회원정보를 가져옴
+		List<ToastUserDTO>  lists = iUserService.userAllSelect(userResult);
+		model.addAttribute("lists", lists);
+				
 		String htmlresult = "";
 		for(int i = 0 ; i < lists.size() ; ++i) {
 			htmlresult +=  "<tr>"+
@@ -149,10 +166,23 @@ public class AdminCtrl {
 					"</td>"+
 					"<td><button onclick='modify("+lists.get(i).getUserid()+")'>modify</button></td>"+
 					"</tr>";
-		}	
+		}			
+		 
+   	 	htmlresult += "<td><a href='#' onclick='userListCtrl("+pDto.getFirstPageNo()+")'>◁</a>"+
+	 				"<a href='#'  onclick ='userListCtrl("+pDto.getPrevPageNo()+")'>◀</a>";
+				 	
+   	 	for(int i = pDto.getStartPageNo();i<=pDto.getEndPageNo();i++){
+   	 		htmlresult += "<a href='#'  onclick='userListCtrl("+i+")'>"+i+"</a>";
+			
+		} 
+			
+								
+   	 htmlresult +="<a href='#'  onclick='userListCtrl("+pDto.getNextPageNo()+")'>▶</a>"+
+					"<a href='#'  onclick='userListCtrl("+pDto.getEndPageNo()+")'>▷</a>"+ 
+					"</td>";
+		
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("result", htmlresult);
-		System.out.println(htmlresult);
 		return result;
 	}
 	
@@ -166,6 +196,30 @@ public class AdminCtrl {
 		boolean isc = iUserService.userBlock(map);
 		System.out.println(isc+"$$$$$$$$$$$$$$$$$$$$$$$$");
 		logger.info("Controller userBlock {}", isc);
+		
+		
+		return "adminPage";
+	}
+	
+	@RequestMapping(value="/userListCtrl.do", method=RequestMethod.GET)
+	public String userpaging(HttpSession session, Model model, String pageNo) {
+		
+		
+		
+		int cnt = iUserService.userCnt();
+		if(cnt == 0) cnt=1;
+		ToastPagingDTO pDto = new ToastPagingDTO(5, Integer.parseInt(pageNo), cnt, 9);
+		session.setAttribute("pDto", pDto);
+		
+		// 페이징 처리
+		Map<String, String> pagingMap = new HashMap<String, String>();
+		pagingMap.put("firstuserno", String.valueOf(pDto.getFirstBoardNo()));
+		pagingMap.put("enduserno", String.valueOf(pDto.getEndBoardNo()));
+		//페이지만큼 뿌려줄 회원정보를 가져옴
+		List<ToastUserDTO> lists = iUserService.userAllSelect(pagingMap);
+		model.addAttribute("lists",lists);
+		System.out.println("페이지에 몇개 뿌려주나 :"+lists.size());
+		
 		
 		
 		return "adminPage";

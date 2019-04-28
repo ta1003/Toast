@@ -171,7 +171,7 @@
 	    yAxis: {
 	        title: 'Amount', // y축 제목
 	        min: 0, 		// 최소 값
-	        max: 15			// 최대 값
+	        max: 100		// 최대 값
 	    },
 	    xAxis: {
 	        title: 'Month' // x축 타이틀

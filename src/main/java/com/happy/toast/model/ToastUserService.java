@@ -80,6 +80,18 @@ public class ToastUserService implements IToastUserService{
 		return iUserDao.userUpdate(dto);
 	}
 
+	@Override
+	public int userCnt() {
+		// TODO Auto-generated method stub
+		return iUserDao.userCnt();
+	}
+
+	@Override
+	public List<ToastUserDTO> userAllSelect(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userAllSelect(map);
+	}
+
 
 	
 

@@ -1,11 +1,15 @@
 <!-- footer -->
-<div id="footer">
-   <p>
+
+
+<nav class="navbar navbar-default" style="width: 100%; ">  
+    <div class="navbar-footer" style="text-align: center;">
+     <p style="width: 100%;">
       Web Master - coming soon~!
       <br />
       Copyright © team.toaster All rights reserved.
-   </p>
-</div>
+  	 </p>
+    </div>      
+</nav>
 <!-- footer -->
 
 

@@ -1,3 +1,4 @@
+<%@page import="com.happy.toast.dtos.ToastPagingDTO"%>
 <%@page import="com.happy.toast.dtos.ToastUserDTO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,8 +9,16 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 </head>
+<%
+	ToastPagingDTO pDto = (ToastPagingDTO)session.getAttribute("pDto");
+%>
 
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 function adminShow() {
 // 	alert("아작스 작동");
@@ -23,9 +32,9 @@ var ajaxAdminShow = function (){
 	//alert("아작스~~~");
 	$.ajax({
 		url : "adminShowAll.do",
-		type : "post",
+		type : "get",
 		asyn : false,
-		data : "cmd=1",
+		data : { "cmd" : 1 , "pageNo" : 1 },
 		dataType : "json",
 		success : function(obj){			
 			
@@ -40,10 +49,41 @@ var ajaxAdminShow = function (){
 				   	"<th>REGDATE</th>"+
 				   	"<th>DELFLAG</th>"+
 				   	"<th>MODIFY</th>"+
-				 "</tr>";
-				 
-				 htmlTable += obj.result;
+				   	"</tr>";
+				htmlTable += obj.result;				 
 				$("#toastuser").html(htmlTable);
+					
+		} , error : function() {
+			alert("실패");
+		}
+	});
+}
+
+var userListCtrl = function(value) {
+	
+	$.ajax({
+		url : "adminShowAll.do",
+		type : "get",
+		asyn : false,
+		data : { "cmd" : 1 , "pageNo" : value },
+		dataType : "json",
+		success : function(obj){			
+			alert(obj);
+			var htmlTable ="";
+					htmlTable += "<tr>"+
+					"<th>USERID</th>"+
+					"<th>NICKNAME</th>"+
+					"<th>ADDRESS</th>"+
+					"<th>PHONE</th>"+
+					"<th>EMAIL</th>"+
+					"<th>AUTH</th>"+
+				   	"<th>REGDATE</th>"+
+				   	"<th>DELFLAG</th>"+
+				   	"<th>MODIFY</th>"+
+				 "</tr>";				
+				 htmlTable += obj.result;
+					 
+				$("#toastuser").html(htmlTable);			
 		} , error : function() {
 			alert("실패");
 		}
@@ -83,7 +123,9 @@ var ajaxModify = function (userid) {
 </script>
 
 <body>
-	
+<div id="layout">
+	<%@ include file="/WEB-INF/view/Header.jsp"%>		
+	<div id="toast">
 	<a href="#" onclick="adminShow()">Show All Users</a>
 	<br>
 	<a href="./homepageState.do">Check Connected Users</a>
@@ -99,10 +141,18 @@ var ajaxModify = function (userid) {
 		
 			</table>
 		</form>
+		
+		
+		
+		
+		
+		
+		
 		<div>
 				<input type="button" value="돌아가기" onclick="history.back(-1)">
 		</div>
 	</div>
+</div>
 
 
 
@@ -112,7 +162,7 @@ var ajaxModify = function (userid) {
 
 
 
-
-
+<%@ include file="/WEB-INF/view/Footer.jsp"%>	
+</div>
 </body>
 </html>

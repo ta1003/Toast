@@ -93,4 +93,16 @@ public class ToastUserDao implements IToastUserDao{
 		return sqlSession.update(NS+"userUpdate", dto);
 	}
 
+	@Override
+	public int userCnt() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"userCnt");
+	}
+
+	@Override
+	public List<ToastUserDTO> userAllSelect(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NS+"userAllSelect", map);
+	}
+
 }

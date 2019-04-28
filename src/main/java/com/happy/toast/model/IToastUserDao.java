@@ -19,7 +19,7 @@ public interface IToastUserDao {
 	public String 			  userEmailChk(String userEmail);
 	// 암호화된 비밀번호 체크
 	public boolean			  userPasswordChk(Map<String,String> map);
-
+	// 회원  접근 권한 변경
 	public boolean   		  userBlock(Map<String, String> map);
 	
 	// 정보 수정시 닉네임 중복체크
@@ -28,4 +28,8 @@ public interface IToastUserDao {
 	public String 			  userEmailUpdateChk(Map<String,String> map);
 	
 	public int 				  userUpdate(ToastUserDTO dto);
+	
+	public int				  userCnt();
+	
+	public List<ToastUserDTO> userAllSelect(Map<String, String> map);
 }
