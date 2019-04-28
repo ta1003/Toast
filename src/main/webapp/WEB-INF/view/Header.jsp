@@ -7,7 +7,7 @@
 
 <!-- header-->
 <header>
-<nav class="navbar navbar-default" style="width: 100%; background-color: #A9A9F5">  
+<nav class="navbar navbar-default" style="width: 100%;">  
     <div class="navbar-header">
      <h1>TOAST CALENDAR</h1>    
     </div>    
