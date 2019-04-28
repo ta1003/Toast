@@ -14,7 +14,10 @@ version="3.1">
  	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<!-- 모델의 Bean을 생성하는 xml path 설정 -->
-		<param-value>/WEB-INF/spring/appServlet/applicationContext.xml</param-value>
+		<param-value>
+		/WEB-INF/spring/appServlet/applicationContext.xml
+		/WEB-INF/spring/appServlet/visit-context.xml
+		</param-value>
 	</context-param>
 
 	<!-- root context는 1개의 context만 사용가능  하지만 spring 에서는 init context가 같기 때문에 사용 -->
