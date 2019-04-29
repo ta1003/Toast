@@ -15,11 +15,40 @@ public class ToastUserDTO implements Serializable {
 	private String email;
 	private String auth;
 	private String regdate;
+	private String delflag;
+	
+
+	public String getDelflag() {
+		return delflag;
+	}
+
+
+	public void setDelflag(String delflag) {
+		this.delflag = delflag;
+	}
+
 
 	public ToastUserDTO() {
 	}
 
 	
+	
+	
+	public ToastUserDTO(String userid, String password, String nickname, String address, String phone, String email,
+			String auth, String regdate, String delflag) {
+		super();
+		this.userid = userid;
+		this.password = password;
+		this.nickname = nickname;
+		this.address = address;
+		this.phone = phone;
+		this.email = email;
+		this.auth = auth;
+		this.regdate = regdate;
+		this.delflag = delflag;
+	}
+
+
 	public ToastUserDTO(String userid, String password, String nickname, String email, String auth, String regdate) {
 		super();
 		this.userid = userid;
@@ -113,11 +142,8 @@ public class ToastUserDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Toastuser_DTO [userid=" + userid + ", password=" + password + ", nickname=" + nickname + ", address="
-				+ address + ", phone=" + phone + ", email=" + email + ", auth=" + auth + ", regdate=" + regdate + "]";
-	}
-
-	
-	
-	
+		return "ToastUserDTO [userid=" + userid + ", password=" + password + ", nickname=" + nickname + ", address="
+				+ address + ", phone=" + phone + ", email=" + email + ", auth=" + auth + ", regdate=" + regdate
+				+ ", delflag=" + delflag + "]";
+	}	
 }

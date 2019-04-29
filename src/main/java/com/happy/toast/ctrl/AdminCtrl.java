@@ -59,7 +59,7 @@ public class AdminCtrl {
 			jList.put("email", dto.getEmail());       
 			jList.put("auth", dto.getAuth());           
 			jList.put("regdate", dto.getRegdate());           
-			
+			jList.put("delflag", dto.getDelflag());
 			
 			jLists.add(jList);
 		}

@@ -1,3 +1,5 @@
+<%@page import="com.happy.toast.dtos.ToastUserDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,8 +8,8 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 </head>
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 
+<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 function adminShow() {
 // 	alert("아작스 작동");
@@ -24,11 +26,46 @@ var ajaxAdminShow = function (){
 		dataType : "json",
 		success : function(obj){			
 //				alert("됬느야");
-				alert(obj.lists[0].address);	
+//				alert(obj.lists[0].address);	
+				$.each(obj,function(key,value){
+					
+					var htmlTable ="";
+					
+					if(key=="lists"){
+						
+						htmlTable += "<tr>"+
+										"<th>USERID</th>"+
+										"<th>NICKNAME</th>"+
+										"<th>ADDRESS</th>"+
+										"<th>PHONE</th>"+
+										"<th>EMAIL</th>"+
+										"<th>AUTH</th>"+
+									   	"<th>REGDATE</th>"+
+									   	"<th>DELFLAG</th>"+
+									   	"<th>MODIFY</th>"+
+									 "</tr>";
+												
+				$.each(value,function(key,user){	
+					alert(user.delflag);
+					//alert(user);
+					htmlTable += "<tr>"+
+									"<td>"+user.userid+"</td>"+
+									"<td>"+user.nickname+"</td>"+
+									"<td>"+user.address+"</td>"+
+									"<td>"+user.phone+"</td>"+
+									"<td>"+user.email+"</td>"+
+									"<td>"+user.auth+"</td>"+
+									"<td>"+user.regdate+"</td>"+
+									"<td>"+user.delflag+"</td>"+
+									"<td><button onclick='modify()'>modify</button></td>"+
+								"</tr>";
+				});	
+						
+				}
+								
+					$("#toastuser").html(htmlTable);
 				
-				
-				
-				
+			});	
 				
 		} , error : function() {
 			alert("실패");
@@ -37,31 +74,54 @@ var ajaxAdminShow = function (){
 }
 
 
+function modify(){
+//	alert("수정");
+	ajaxModify();
+}
+
+var ajaxModify = function () {
+	alert("수정 아작스");
+	$.ajax({
+		url : "usermodify.do",
+		type : "post",
+		asyn : false,
+		data : {"userid":userid},
+		success : function(){
+			
+		}, error : function() {
+			alert("수정 실패");
+		}
+	});
+}
+
+
+
+
+
+
 
 </script>
 
 <body>
+	${lists}
 	<a href="#" onclick="adminShow()">Show All Users</a>
 	<br>
 	<a href="./homepageState.do">Check Connected Users</a>
 	<br>
 	<a href="./logout.do">Log Out</a>
-
-	${ulists}
+	
+	
 
 
 	<div id="container">
-		<form action="#" method="post" id="frm">
+		<form action="#" method="post" id="toastuser" onsubmit="return false;">
 			<table>
-
-
+		
 			</table>
-			<div>
-				<input class="btn btn-sm btn-primary btn-center" type="button"
-					value="돌아가기" onclick="history.back(-1)">
-			</div>
-
 		</form>
+		<div>
+				<input type="button" value="돌아가기" onclick="history.back(-1)">
+		</div>
 	</div>
 
 

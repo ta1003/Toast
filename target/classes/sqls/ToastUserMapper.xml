@@ -3,13 +3,13 @@
 <mapper namespace="com.happy.toast.user">
 	
 	<select id="userSelectAll" resultType="UDto">
-		SELECT USERID,PASSWORD,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE 
+		SELECT USERID,PASSWORD,NICKNAME,ADDRESS,PHONE,EMAIL,AUTH,REGDATE,DELFLAG 
 			FROM TOASTUSER 
 	</select>
 	
 	<insert id="userInsert" parameterType="UDto">
 		INSERT INTO TOASTUSER
-			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE)			
+			VALUES(#{userid},#{password},#{nickname},#{address},#{phone},#{email},'U',SYSDATE,'F')			
 	</insert>
 		
 </mapper>

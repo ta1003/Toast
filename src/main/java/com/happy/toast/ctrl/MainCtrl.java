@@ -20,8 +20,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.happy.toast.dtos.ToastCalDTO;
 import com.happy.toast.dtos.ToastPagingDTO;
+import com.happy.toast.dtos.ToastUserDTO;
 import com.happy.toast.dtos.ToastVisitDTO;
 import com.happy.toast.model.IToastCalService;
+import com.happy.toast.model.IToastUserService;
 import com.happy.toast.model.ToastVisitDao;
 
 @Controller
@@ -38,6 +40,9 @@ public class MainCtrl {
 	
 	@Autowired
 	private ToastVisitDao vdao;
+	
+	@Autowired
+	private IToastUserService iUserService;
 	
 	
 	@RequestMapping(value = "/login.do" , method = RequestMethod.GET)
@@ -109,6 +114,10 @@ public class MainCtrl {
 			return "userMain";
 		}
 		else {
+			List<ToastUserDTO> ulists =  iUserService.userSelectAll();
+			logger.info("Controller ulists 유저 정보 전체 리스트{} ", ulists);
+			model.addAttribute("ulists", ulists);
+					
 			return "adminPage";
 		}		
 	}
