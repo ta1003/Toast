@@ -1,6 +1,7 @@
 package com.happy.toast.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class ToastUserService implements IToastUserService{
 	public int userInsert(ToastUserDTO dto) {
 		// TODO Auto-generated method stub
 		return iUserDao.userInsert(dto);
+	}
+
+	@Override
+	public ToastUserDTO userSelectOne(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iUserDao.userSelectOne(map);
 	}
 
 }

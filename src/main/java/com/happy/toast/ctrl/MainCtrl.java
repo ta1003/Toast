@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -36,6 +37,9 @@ public class MainCtrl {
 	private IToastCalService iCalService;
 	
 	@Autowired
+	private IToastUserService iUserService;
+	
+	@Autowired
 	private SqlSession sqlsession;
 	
 	@Autowired
@@ -45,9 +49,21 @@ public class MainCtrl {
 	private IToastUserService iUserService;
 	
 	
-	@RequestMapping(value = "/login.do" , method = RequestMethod.GET)
-	public String login(String auth,HttpSession session,ToastVisitDTO vdto, Model model) throws Exception {
+	@RequestMapping(value = "/login.do" , method = RequestMethod.POST)
+	public String login(String auth,HttpSession session,ToastVisitDTO vdto, Model model,HttpServletRequest request) throws Exception {
 		
+
+		// 회원정보 세션에 담음
+		Map<String,String> map = new HashMap<String,String>();			
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		map.put("userid", userid);
+		map.put("password", password);
+		ToastUserDTO uDto = iUserService.userSelectOne(map);
+		session.setAttribute("uDto", uDto);
+		
+		if(uDto.getAuth().equalsIgnoreCase("U")) {
+
 		/*// request를 파라미터에 넣지 않고도 사용할수 있도록 설정
 		HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		
@@ -92,34 +108,46 @@ public class MainCtrl {
 		logger.info("todayCount 금일방문자수 :"+todayCount);
 		logger.info("totalCount 전체방문자수 :"+totalCount);
 		
-		
-		if(auth.equalsIgnoreCase("U")) {
-			
+						
 			//페이징 처리를 위한 pageDto 생성			
-			int cnt = iCalService.calCnt();
+			int cnt = iCalService.calCnt(uDto.getUserid());
 			ToastPagingDTO pDto = new ToastPagingDTO(5, 1,cnt, 9);				
 			session.setAttribute("pDto", pDto);			
 			
 			// 화면에 뿌려줄 갯수를 맵에 저장
-			Map<String,String> pagingMap = new HashMap<String,String>();						
+			Map<String,String> pagingMap = new HashMap<String,String>();
+			pagingMap.put("userid", uDto.getUserid());
 			pagingMap.put("firstcalno", String.valueOf(pDto.getFirstBoardNo()));
 			pagingMap.put("endcalno", String.valueOf(pDto.getEndBoardNo()));	
 			// 페이지만큼 뿌려줄 달력을 가져옴
 			List<ToastCalDTO> lists = iCalService.calAllSelect(pagingMap);
-			model.addAttribute("lists", lists);
-			// 잘들어갔나 확인
-			System.out.println(lists.get(0));
-			
+			model.addAttribute("lists", lists);			
 			
 			return "userMain";
-		}
+		}		
 		else {
 			List<ToastUserDTO> ulists =  iUserService.userSelectAll();
 			logger.info("Controller ulists 유저 정보 전체 리스트{} ", ulists);
 			model.addAttribute("ulists", ulists);
 					
 			return "adminPage";
-		}		
+		}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/loginform.do" , method=RequestMethod.POST)
+	public Map<String,String> loginForm(HttpServletRequest request){
+		Map<String,String> map = new HashMap<String,String>();			
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		map.put("userid", userid);
+		map.put("password", password);
+		ToastUserDTO dto = iUserService.userSelectOne(map);
+		
+		Map<String,String> resultmap = new HashMap<String,String>();	
+		if(dto != null) {resultmap.put("result", "true");}
+		else			{resultmap.put("result", "false");}
+		return resultmap;
 	}
 	
 	@RequestMapping(value= "/signUp.do" , method = RequestMethod.GET)

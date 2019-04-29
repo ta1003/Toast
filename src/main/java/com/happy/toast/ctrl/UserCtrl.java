@@ -40,14 +40,19 @@ public class UserCtrl {
 	private IToastScheduleService iScheduleService;
 	
 	@ResponseBody
-	@RequestMapping(value="/delete.do" , method = RequestMethod.POST)	
+	@RequestMapping(value="/calDelete.do" , method = RequestMethod.POST)	
 	public Map<String, Integer> init(Model model, @RequestParam(value="checkArray[]") List<String> arrayParams) {
 		System.out.println(arrayParams);
 		//for(int i = 0; i < chk.length ; i++)
 		//	System.out.println(chk[i]);		
+		int result = 0;
+		//System.out.println(arrayParams.get(0));
+		for(int i = 0 ; i < arrayParams.size() ; i++) {
+			result = iCalService.calDelete(arrayParams.get(i));
+		}
 		
 		Map<String, Integer> map = new HashMap<String,Integer>();
-		map.put("result", arrayParams.size());		
+		map.put("result", result);		
 		return map;
 	}
 	
@@ -59,13 +64,14 @@ public class UserCtrl {
 	
 	@ResponseBody
 	@RequestMapping(value="/calInsert.do" , method = RequestMethod.POST)
-	public int calinsert(HttpServletRequest req)
+	public int calinsert(HttpServletRequest req,HttpSession session)
 	{
+		ToastUserDTO uDto = (ToastUserDTO)session.getAttribute("uDto");
 		String caltitle = (String)req.getParameter("calTitle");
 		if(caltitle == null) caltitle =" ";
 		String calcontent = (String)req.getParameter("calContent");
 		if(calcontent == null) calcontent =" ";
-		String userid = "kim";//(String)req.getAttribute("userid");
+		String userid = uDto.getUserid();//(String)req.getAttribute("userid");
 		String caltype = (String)req.getParameter("calType");
 		if(caltype == null) caltype =" ";
 		
@@ -79,15 +85,17 @@ public class UserCtrl {
 	public String render(HttpSession session,Model model,String pageNo){
 		
 		if(pageNo == null || pageNo == "")
-			pageNo = "1";
+			pageNo = "1";		
 		
+		ToastUserDTO uDto = (ToastUserDTO)session.getAttribute("uDto");
 		// pagingDTO 생성
-		int cnt = iCalService.calCnt();
+		int cnt = iCalService.calCnt(uDto.getUserid());
 		ToastPagingDTO pDto = new ToastPagingDTO(5, Integer.parseInt(pageNo),cnt, 9);				
 		session.setAttribute("pDto", pDto);		
 		
 		// 페이징 처리
-		Map<String,String> pagingMap = new HashMap<String,String>();			
+		Map<String,String> pagingMap = new HashMap<String,String>();	
+		pagingMap.put("userid",uDto.getUserid());
 		pagingMap.put("firstcalno", String.valueOf(pDto.getFirstBoardNo()));
 		pagingMap.put("endcalno", String.valueOf(pDto.getEndBoardNo()));	
 		//페이지만큼 뿌려줄 달력을 가져옴

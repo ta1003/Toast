@@ -12,4 +12,6 @@ public List<ToastScheduleDTO> scheduleSelectAll(String calid);
 	public int 			scheduleUpdate(ToastScheduleDTO dto);
 	
 	public int 			scheduleDelete(String scheduleid);
+	
+	
 }

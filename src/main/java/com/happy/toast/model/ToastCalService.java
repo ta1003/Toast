@@ -21,9 +21,9 @@ public class ToastCalService implements IToastCalService{
 	}
 
 	@Override
-	public int calDelete(int calid) {
+	public int calDelete(String calid) {
 		// TODO Auto-generated method stub
-		return 0;
+		return CDao.calDelete(calid);
 	}
 
 	@Override
@@ -39,9 +39,9 @@ public class ToastCalService implements IToastCalService{
 	}
 
 	@Override
-	public int calCnt() {
+	public int calCnt(String userid) {
 		// TODO Auto-generated method stub
-		return CDao.calCnt();
+		return CDao.calCnt(userid);
 	}
 
 }
